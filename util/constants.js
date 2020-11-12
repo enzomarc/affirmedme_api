@@ -1,0 +1,4 @@
+exports.TOKEN_SECRET = "SECRET_TOKEN_ENCRYPTION_KEY";
+exports.SESSION_SECRET = "SECRET_SESSION_ENCRYPTION_KEY";
+exports.ADMIN_USER = "emarc@gmail.com";
+exports.ADMIN_PASSWORD = "password";
