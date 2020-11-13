@@ -8,4 +8,4 @@ const schema = new mongoose.Schema({
   active: { type: Boolean, default: true },
 }, { timestamps: true });
 
-module.exports = mongoose.model('User', schema);
+module.exports = mongoose.model('Admin', schema);

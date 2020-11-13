@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8" />
-        <title>Argon - {{title}}</title>
+        <title>AffirmedMe - {{title}}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Argon Dashboard" name="description" />
         <meta content="Licon Corp" name="author" />
@@ -82,84 +82,37 @@
                                                 <a class="nav-link dropdown-toggle arrow-none" href="#"
                                                     id="topnav-dashboard" role="button" data-toggle="dropdown"
                                                     aria-haspopup="true" aria-expanded="false">
-                                                    Système <div class="arrow-down"></div>
+                                                    Registration <div class="arrow-down"></div>
                                                 </a>
                                                 <div class="dropdown-menu" aria-labelledby="topnav-dashboard">
-                                                    <a href="/settings" class="dropdown-item">Paramétrage</a>
-                                                    <a href="/sync" class="dropdown-item">Synchronisation</a>
-                                                    <a href="/staff" class="dropdown-item">Le personnel</a>
-                                                    <a href="/users" class="dropdown-item">Les utilisateurs</a>
+                                                    <a href="/registration/basic" class="dropdown-item">Basic</a>
+                                                    <a href="/registration/premium" class="dropdown-item">Premium</a>
                                                 </div>
                                             </li>
-
+                                             <li class="nav-item">
+                                                <a class="nav-link arrow-none" href="/payments" id="topnav-dashboard" role="button" aria-haspopup="true" aria-expanded="false">
+                                                    Payments
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link arrow-none" href="/modules" id="topnav-dashboard" role="button" aria-haspopup="true" aria-expanded="false">
+                                                    Modules
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link arrow-none" href="/tips" id="topnav-dashboard" role="button" aria-haspopup="true" aria-expanded="false">
+                                                    Daily Tips
+                                                </a>
+                                            </li>
                                             <li class="nav-item dropdown">
                                                 <a class="nav-link dropdown-toggle arrow-none" href="#"
                                                     id="topnav-dashboard" role="button" data-toggle="dropdown"
                                                     aria-haspopup="true" aria-expanded="false">
-                                                    Scolarité <div class="arrow-down"></div>
+                                                    Audios <div class="arrow-down"></div>
                                                 </a>
                                                 <div class="dropdown-menu" aria-labelledby="topnav-dashboard">
-                                                    <a href="/students" class="dropdown-item">Les élèves</a>
-                                                    <a href="/scolarity/classrooms" class="dropdown-item">Les
-                                                        classes</a>
-                                                    <a href="/communication" class="dropdown-item">La communication</a>
-                                                </div>
-                                            </li>
-
-                                            <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle arrow-none" href="#"
-                                                    id="topnav-dashboard" role="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    Direction des études <div class="arrow-down"></div>
-                                                </a>
-                                                <div class="dropdown-menu" aria-labelledby="topnav-dashboard">
-                                                    <a href="/classrooms" class="dropdown-item">Les salles de
-                                                        classes</a>
-                                                    <a href="/courses" class="dropdown-item">Les matières</a>
-                                                    <a href="/services" class="dropdown-item">Les services</a>
-                                                    <a href="/certificates" class="dropdown-item">Certificats de
-                                                        travail</a>
-                                                </div>
-                                            </li>
-
-                                            <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle arrow-none" href="#"
-                                                    id="topnav-dashboard" role="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    Comptabilité <div class="arrow-down"></div>
-                                                </a>
-                                                <div class="dropdown-menu" aria-labelledby="topnav-dashboard">
-                                                    <a href="/payments" class="dropdown-item">Les paiements</a>
-                                                    <a href="/recipe" class="dropdown-item">Les recettes</a>
-                                                    <a href="/expenses" class="dropdown-item">Les dépenses</a>
-                                                    <a href="/material" class="dropdown-item">Le matériel</a>
-                                                </div>
-                                            </li>
-
-                                            <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle arrow-none" href="#"
-                                                    id="topnav-dashboard" role="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    Trésorerie <div class="arrow-down"></div>
-                                                </a>
-                                                <div class="dropdown-menu" aria-labelledby="topnav-dashboard">
-                                                    <a href="/treasure/cash" class="dropdown-item">Les caisses</a>
-                                                    <a href="/treasure/debts" class="dropdown-item">Les dettes</a>
-                                                    <a href="/treasure/pay-sheets" class="dropdown-item">Les fiches de
-                                                        paie</a>
-                                                    <a href="/treasure/bonuses" class="dropdown-item">Les primes</a>
-                                                </div>
-                                            </li>
-
-                                            <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle arrow-none" href="#"
-                                                    id="topnav-dashboard" role="button" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    Caissier <div class="arrow-down"></div>
-                                                </a>
-                                                <div class="dropdown-menu" aria-labelledby="topnav-dashboard">
-                                                    <a href="/cash" class="dropdown-item">Les caisses</a>
-                                                    <a href="/payments" class="dropdown-item">Les paiements</a>
+                                                    <a href="/audios/categories" class="dropdown-item">Categories</a>
+                                                    <a href="/audios" class="dropdown-item">Audios list</a>
                                                 </div>
                                             </li>
                                         </ul>
@@ -305,8 +258,7 @@
                                         <img class="rounded-circle header-profile-user" src="{{user.avatar}}"
                                             alt="Avatar">
                                     {{/if}}
-                                    <span class="d-none d-xl-inline-block ml-1">{{user.first_name}}
-                                        {{user.last_name}}</span>
+                                    <span class="d-none d-xl-inline-block ml-1">{{user.name}}</span>
                                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right">
@@ -314,16 +266,14 @@
                                     <a class="dropdown-item" href="#"><i
                                             class="bx bx-user font-size-16 align-middle mr-1"></i> Profile</a>
                                     <a class="dropdown-item" href="#"><i
-                                            class="bx bx-wallet font-size-16 align-middle mr-1"></i> My Wallet</a>
+                                            class="bx bx-wallet font-size-16 align-middle mr-1"></i> Wallet</a>
                                     <a class="dropdown-item d-block" href="#"><span
                                             class="badge badge-success float-right">11</span><i
                                             class="bx bx-wrench font-size-16 align-middle mr-1"></i> Settings</a>
-                                    <a class="dropdown-item" href="#"><i
-                                            class="bx bx-lock-open font-size-16 align-middle mr-1"></i> Lock screen</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item text-danger" href="/logout"><i
                                             class="bx bx-power-off font-size-16 align-middle mr-1 text-danger"></i>
-                                        Déconnexion</a>
+                                        Log out</a>
                                 </div>
                             </div>
                         </div>
@@ -344,7 +294,7 @@
 
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="/">Tableau de bord</a>
+                                            <li class="breadcrumb-item"><a href="/">Dashboard</a>
                                             </li>
                                             <li class="breadcrumb-item active">{{title}}</li>
                                         </ol>
@@ -365,7 +315,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <script>document.write(new Date().getFullYear())</script> © MVENG Engineering.
+                                    <script>document.write(new Date().getFullYear())</script> © AffirmedMe.
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="text-sm-right d-none d-sm-block">

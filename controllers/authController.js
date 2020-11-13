@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
+const Admin = require('../models/admin');
 const constants = require('../util/constants');
 
 /**
@@ -12,13 +12,11 @@ const constants = require('../util/constants');
 exports.auth = async (req, res) => {
   const credentials = { email: req.body.email, password: req.body.password };
 
-  await User.findOne({ email: credentials.email }, async (err, user) => {
+  await Admin.findOne({ email: credentials.email }, async (err, user) => {
     if (err) {
         console.error(err);
         return res.status(401).json({ message: "An error occurred during user login.", error: err });
     }
-
-    console.log(user);
 
     if (user == null)
         return res.status(401).json({ message: "E-mail address or password are invalid." });
@@ -52,7 +50,7 @@ exports.verify = async (req, res) => {
       return res.status(401).json({ message: "Corrupted token emitted." });
     }
 
-    await User.findOne({ email: decoded.email }, (err, user) => {
+    await Admin.findOne({ email: decoded.email }, (err, user) => {
         if (err) {
             console.error(err);
             return res.status(401).json({ message: "An error occurred during token verification." });

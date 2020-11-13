@@ -14,9 +14,7 @@ web.get('/logout', authController.logout);
 web.post('/login/:token', authController.login);
 
 web.get('/', authMiddleware, (req, res, next) => {
-  res.render('index', { layout: 'main', title: 'Tableau de bord' });
+  res.render('index', { layout: 'main', title: 'Dashboard' });
 });
-
-
 
 module.exports = web;
