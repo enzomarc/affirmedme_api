@@ -1,0 +1,323 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-10">
+            <h4 class="card-title">List of modules</h4>
+            {{#if populated}}
+            <p class="card-title-desc">This is where you can see the list of modules available in the app.</p>
+            {{else}}
+            <p class="card-title-desc">There's no module available.</p>
+            {{/if}}
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-primary float-right" data-toggle="modal" data-target=".add-module-modal"><i
+                class="bx bx-user-plus mr-2"></i>Add module</button>
+          </div>
+        </div>
+
+        {{> messages}}
+
+        {{#if populated}}
+        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+          style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Module name</th>
+              <th>Type</th>
+              <th>Suscribers</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {{#each modules as |module|}}
+            <tr>
+              <td style="font-weight: bold">{{inc @index}}</td>
+              <td style="font-weight: bold">{{module.title}}</td>
+              <td>
+                {{#if_eq module.type 'basic'}}
+                <span class="badge badge-info">Basic</span>
+                {{else}}
+                <span class="badge badge-success">Premium</span>
+                {{/if_eq}}
+              </td>
+              <td>103</td>
+              <td>
+                {{#if module.active}}
+                <span class="badge badge-success">Visible</span>
+                {{else}}
+                <span class="badge badge-danger">Hidden</span>
+                {{/if}}
+              </td>
+              <td>
+                <div class="btn-group mt-4 mt-md-0" role="group" aria-label="Module actions">
+                  <button type="button" title="Show" class="btn btn-primary show" data-module="{{module._id}}"><i
+                      class="bx bxs-show"></i></button>
+                  <button type="button" title="Edit" class="btn btn-primary edit" data-module="{{module._id}}"><i
+                      class="bx bx-edit-alt"></i></button>
+                  <button type="button" title="Delete" class="btn btn-danger delete" data-module="{{module._id}}"><i
+                      class="bx bx-trash"></i></button>
+                </div>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add module modal -->
+<div class="modal fade add-module-modal" tabindex="-1" role="dialog" aria-labelledby="Add module modal"
+  style="display: none;" aria-modal="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="col-md-10">
+          <h5 class="modal-title mt-0" id="myLargeModalLabel">Add a module</h5>
+          <p class="card-title-desc" style="margin-bottom: 0">Fill out all the required fields and click on <b
+              style="color: #000;">Save</b>.</p>
+        </div>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form action="/api/modules" method="post">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="first_name">Module name *</label>
+                <input type="text" class="form-control" name="title" id="title" placeholder="Eat well to feel great">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label>Steps</label>
+              <div class="repeater">
+                <div data-repeater-list="module">
+                  <div class="row" style="margin-bottom: 2rem" data-repeater-item>
+                    <div class="col-md-10">
+                      <input type="text" name="step-title" class="form-control" placeholder="Systemize your decision making">
+                      <label>Goals</label>
+                      <div class="goals-repeater">
+                        <div data-repeater-list="goal">
+                          <div class="row" data-repeater-item>
+                            <div class="col-md-10">
+                              <input type="text" name="goal-title" class="form-control" placeholder="Be a hyperrealist">
+                              <label>Tips</label>
+                              <div class="tips-repeater">
+                                <div data-repeater-list="tip">
+                                  <div class="row" data-repeater-item>
+                                    <div class="col-md-10">
+                                      <input type="text" name="tip-title" class="form-control">
+                                    </div>
+                                    <div class="col-md-2">
+                                      <button data-repeater-delete class="btn btn-danger btn-sm"><i class="bx bx-x"></i></button>
+                                      <button data-repeater-create class="btn btn-primary btn-sm"><i class="bx bx-plus"></i></button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-2">
+                            <button data-repeater-delete class="btn btn-danger btn-sm"><i class="bx bx-x"></i></button>
+                            <button data-repeater-create class="btn btn-primary btn-sm"><i class="bx bx-plus"></i></button>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <button data-repeater-delete class="btn btn-danger btn-sm"><i class="bx bx-x"></i></button>
+                      <button data-repeater-create class="btn btn-primary btn-sm"><i class="bx bx-plus"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-success">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- End add module modal -->
+
+<!-- Edit module modal -->
+
+<!-- End edit module modal -->
+
+<!-- Required datatable js -->
+<script src="/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<!-- Buttons examples -->
+<script src="/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="/assets/libs/jszip/jszip.min.js"></script>
+<script src="/assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="/assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+<!-- Responsive examples -->
+<script src="/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<!-- Responsive examples -->
+<script src="/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<!-- Input mask -->
+<script src="/assets/libs/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+<script src="/assets/js/pages/form-mask.init.js"></script>
+<script src="/assets/libs/moment.js"></script>
+<script src="/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+<!-- form repeater js -->
+<script src="/assets/libs/jquery.repeater/jquery.repeater.min.js"></script>
+
+<script>
+  const cookies = document.cookie.split(';');
+
+  const disableInput = () => {
+    const input = $('#edit-module-form').find('input');
+    const select = $('#edit-module-form').find('select');
+
+    for (item of input) {
+      item.disabled = true;
+    }
+
+    for (item of select) {
+      item.disabled = true;
+    }
+  };
+
+  const enableInput = () => {
+    const input = $('#edit-module-form').find('input');
+    const select = $('#edit-module-form').find('select');
+
+    for (item of input) {
+      item.disabled = false;
+    }
+
+    for (item of select) {
+      item.disabled = false;
+    }
+  };
+
+  // Init Repeater
+  $('.repeater').repeater({
+    initEmpty: false,
+    isFirstItemUndeletable: true,
+    repeaters: [{
+      selector: '.goals-repater'
+    }, {
+      selector: '.tips-repeater'
+    }]
+  });
+
+  // Init DataTable
+  $('table').DataTable({ lengthChange: !1, buttons: ["copy", "excel", "pdf", "colvis"] }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)");
+
+  $('.edit').click(function () {
+    const module_id = $(this)[0].dataset['module'];
+
+    $.ajax({
+      method: 'GET',
+      url: '/api/module/' + module_id,
+      success: (module) => {
+        $('.edit-module-modal #first_name').val(module.first_name);
+        $('.edit-module-modal #last_name').val(module.last_name);
+        $('.edit-module-modal #birthdate').val(moment(module.birthdate).format('YYYY-MM-DD'));
+        $('.edit-module-modal #birthplace').val(module.birthplace);
+        $('.edit-module-modal #address').val(module.address);
+        $('.edit-module-modal #phone').val(module.phone);
+        $('.edit-module-modal #email').val(module.email);
+
+        $('.edit-module-modal #gender').find('option[value="' + module.gender + '"]')[0].selected = true
+        $('.edit-module-modal #type').find('option[value="' + module.type + '"]')[0].selected = true
+
+        $('#edit-module-form')[0].action = '/api/module/' + module.id + '/update';
+        enableInput();
+
+        $('.edit-module-modal').modal('show');
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  });
+
+  $('.show').click(function () {
+    const module_id = $(this)[0].dataset['module'];
+
+    $.ajax({
+      method: 'GET',
+      url: '/api/module/' + module_id,
+      success: (module) => {
+        $('.edit-module-modal #first_name').val(module.first_name);
+        $('.edit-module-modal #last_name').val(module.last_name);
+        $('.edit-module-modal #birthdate').val(moment(module.birthdate).format('YYYY-MM-DD'));
+        $('.edit-module-modal #birthplace').val(module.birthplace);
+        $('.edit-module-modal #address').val(module.address);
+        $('.edit-module-modal #phone').val(module.phone);
+        $('.edit-module-modal #email').val(module.email);
+
+        $('.edit-module-modal #gender').find('option[value="' + module.gender + '"]')[0].selected = true
+        $('.edit-module-modal #type').find('option[value="' + module.type + '"]')[0].selected = true
+
+        $('#edit-module-form')[0].action = '/api/module/' + module.id + '/update';
+        disableInput();
+
+        $('.edit-module-modal').modal('show');
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  });
+
+  $('.delete').click(function () {
+    const module_id = $(this)[0].dataset['module'];
+
+    Swal.fire({
+      title: 'Confirmation de suppression',
+      text: "Êtes vous sûr de vouloir supprimer ce personnel?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#45cb85',
+      cancelButtonColor: '#9095ad',
+      confirmButtonText: 'Oui, supprimer',
+      cancelButtonText: 'Annuler'
+    }).then((result) => {
+      if (result.value) {
+        $.ajax({
+          url: '/api/module/' + module_id + '/delete',
+          method: 'GET',
+          success: (res) => {
+            Swal.fire('Suppression effectuée', res.message, 'success');
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          },
+          error: (err) => {
+            console.error(err);
+            Swal.fire('Erreur de suppression', err.responseJSON.message, 'error');
+          }
+        });
+      }
+    });
+  });
+</script>
