@@ -4,6 +4,7 @@ const web = express.Router();
 // Controllers
 const authController = require('../controllers/webAuthController');
 const moduleController = require('../controllers/moduleController');
+const tipController = require('../controllers/tipController');
 
 
 // Middlewares
@@ -19,4 +20,6 @@ web.get('/', authMiddleware, (req, res, next) => {
 });
 
 web.get('/modules', authMiddleware, moduleController.page);
+web.get('/tips', authMiddleware, tipController.page);
+
 module.exports = web;

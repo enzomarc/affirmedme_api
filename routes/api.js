@@ -6,6 +6,7 @@ const router = express.Router();
 const moduleController = require('../controllers/moduleController');
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
+const tipController = require('../controllers/tipController');
 
 // Middleware
 // const authMiddleware = require("../middlewares/auth");
@@ -58,5 +59,11 @@ router.post('/login', userController.login);
 router.get('/modules/basic', moduleController.basic);
 router.get('/modules/premium', moduleController.premium);
 router.post('/modules', moduleController.store);
+
+// Tips
+router.get('/tips/:tip', tipController.show);
+router.post('/tips', tipController.store);
+router.post('/tips/:tip/update', tipController.update);
+router.get('/tips/:tip/delete', tipController.delete);
 
 module.exports = router;
