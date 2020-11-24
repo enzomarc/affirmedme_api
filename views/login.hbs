@@ -102,8 +102,6 @@
           method: 'POST',
           data: { email: email, password: password },
           success: (response) => {
-            console.log(response);
-
             $.ajax({
               url: '/login/' + response.access_token,
               method: 'POST',

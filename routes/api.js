@@ -5,6 +5,7 @@ const router = express.Router();
 // Controllers
 const moduleController = require('../controllers/moduleController');
 const authController = require('../controllers/authController');
+const userController = require('../controllers/userController');
 
 // Middleware
 // const authMiddleware = require("../middlewares/auth");
@@ -39,13 +40,19 @@ router.use((req, res, next) => {
   next();
 });
 
+
+
 router.get("/", (req, res, next) => {
   return res.json({ app: "AffirmedMe API", version: "v1.0.0" });
 });
 
-// Auth routes
+// Admin Auth
 router.post('/auth', authController.auth);
 router.get('/auth/verify/:token', authController.verify);
+
+// User Auth
+router.post('/register', userController.register);
+router.post('/login', userController.login);
 
 // Modules
 router.get('/modules/basic', moduleController.basic);

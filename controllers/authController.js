@@ -4,7 +4,7 @@ const Admin = require('../models/admin');
 const constants = require('../util/constants');
 
 /**
- * User authentication route.
+ * Administrator authentication.
  * 
  * @param {*} req 
  * @param {*} res 
@@ -26,7 +26,7 @@ exports.auth = async (req, res) => {
 
     if (bcrypt.compareSync(credentials.password, user.password)) {
         const payload = { id: user._id, email: user.email, name: user.name, avatar: user.avatar };
-        const token = jwt.sign(payload, constants.TOKEN_SECRET, { expiresIn: '3 hours' });
+        const token = jwt.sign(payload, constants.TOKEN_SECRET, { expiresIn: '3h' });
 
         return res.json({ access_token: token, user: payload });
     } else {
