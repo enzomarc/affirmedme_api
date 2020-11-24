@@ -7,9 +7,11 @@ const moduleController = require('../controllers/moduleController');
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
 const tipController = require('../controllers/tipController');
+const audioController = require('../controllers/audioController');
 
 // Middleware
-// const authMiddleware = require("../middlewares/auth");
+const multer_audios = require("../middlewares/multer_audios");
+
 
 // CORS Middleware
 router.use((req, res, next) => {
@@ -61,9 +63,20 @@ router.get('/modules/premium', moduleController.premium);
 router.post('/modules', moduleController.store);
 
 // Tips
+router.get('tips', tipController.index);
+router.get('daily_tip', tipController.daily);
 router.get('/tips/:tip', tipController.show);
 router.post('/tips', tipController.store);
 router.post('/tips/:tip/update', tipController.update);
-router.get('/tips/:tip/delete', tipController.delete);
+router.delete('/tips/:tip', tipController.delete);
+
+// Audios
+router.get('/audios', audioController.index);
+router.get('/audios/:audio', audioController.show);
+router.post('/audios', multer_audios, audioController.store);
+router.post('/audios/:audio/update', multer_audios, audioController.update);
+router.delete('/audios/:audio', audioController.delete);
+
+
 
 module.exports = router;

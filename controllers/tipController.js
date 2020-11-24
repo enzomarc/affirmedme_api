@@ -2,6 +2,47 @@ const Tip = require('../models/tip');
 
 
 /**
+ * Get all tips.
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.index = async (req, res) => {
+  await Tip.find((err, tips) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Unable to get tips.", error: err });
+    }
+
+    return res.json(tips);
+  });
+}
+
+/**
+ * Get all daily tips.
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.daily = async (req, res) => {
+  await Tip.find((err, tips) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Unable to get daily tip.", error: err });
+    }
+
+    const today = [];
+
+    tips.forEach((tip) => {
+      if (Date.parse(tip.date) >= Date.now())
+        today.push(tip);
+    });
+
+    return res.json(today);
+  });
+}
+
+/**
  * Show tips list page.
  * 
  * @param {*} req 

@@ -5,6 +5,7 @@ const web = express.Router();
 const authController = require('../controllers/webAuthController');
 const moduleController = require('../controllers/moduleController');
 const tipController = require('../controllers/tipController');
+const audioController = require('../controllers/audioController');
 
 
 // Middlewares
@@ -21,5 +22,6 @@ web.get('/', authMiddleware, (req, res, next) => {
 
 web.get('/modules', authMiddleware, moduleController.page);
 web.get('/tips', authMiddleware, tipController.page);
+web.get('/audios', authMiddleware, audioController.page);
 
 module.exports = web;

@@ -4,16 +4,16 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-10">
-            <h4 class="card-title">List of tips</h4>
+            <h4 class="card-title">List of audios</h4>
             {{#if populated}}
-            <p class="card-title-desc">This is where you can see the list of tips showed in the app.</p>
+            <p class="card-title-desc">This is where you can see the list of audios showed in the app.</p>
             {{else}}
-            <p class="card-title-desc">There's no tips available.</p>
+            <p class="card-title-desc">There's no audios available.</p>
             {{/if}}
           </div>
           <div class="col-md-2">
-            <button class="btn btn-primary float-right" data-toggle="modal" data-target=".add-tip-modal"><i
-                class="bx bx-user-plus mr-2"></i>Add tip</button>
+            <button class="btn btn-primary float-right" data-toggle="modal" data-target=".add-audio-modal"><i
+                class="bx bx-user-plus mr-2"></i>Add audio</button>
           </div>
         </div>
 
@@ -25,25 +25,25 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Tip content</th>
-              <th>Scheduled for</th>
+              <th>Audio title</th>
+              <th>Category</th>
               <th>Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {{#each tips as |tip|}}
+            {{#each audios as |audio|}}
             <tr>
               <td style="font-weight: bold">{{inc @index}}</td>
-              <td style="font-weight: bold">{{tip.content}}</td>
-              <td>{{tip.date}}</td>
+              <td style="font-weight: bold">{{audio.title}}</td>
+              <td>{{audio.category}}</td>
               <td>
-                <div class="btn-group mt-4 mt-md-0" role="group" aria-label="Tip actions">
-                  <button type="button" title="Show" class="btn btn-primary show" data-tip="{{tip._id}}"><i
+                <div class="btn-group mt-4 mt-md-0" role="group" aria-label="Audio actions">
+                  <button type="button" title="Show" class="btn btn-primary show" data-audio="{{audio._id}}"><i
                       class="bx bxs-show"></i></button>
-                  <button type="button" title="Edit" class="btn btn-primary edit" data-tip="{{tip._id}}"><i
+                  <button type="button" title="Edit" class="btn btn-primary edit" data-audio="{{audio._id}}"><i
                       class="bx bx-edit-alt"></i></button>
-                  <button type="button" title="Delete" class="btn btn-danger delete" data-tip="{{tip._id}}"><i
+                  <button type="button" title="Delete" class="btn btn-danger delete" data-audio="{{audio._id}}"><i
                       class="bx bx-trash"></i></button>
                 </div>
               </td>
@@ -57,14 +57,14 @@
   </div>
 </div>
 
-<!-- Add tip modal -->
-<div class="modal fade add-tip-modal" tabindex="-1" role="dialog" aria-labelledby="Add tip modal"
+<!-- Add audio modal -->
+<div class="modal fade add-audio-modal" tabindex="-1" role="dialog" aria-labelledby="Add audio modal"
   style="display: none;" aria-modal="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <div class="col-md-10">
-          <h5 class="modal-title mt-0" id="myLargeModalLabel">Add a tip</h5>
+          <h5 class="modal-title mt-0" id="myLargeModalLabel">Add a audio</h5>
           <p class="card-title-desc" style="margin-bottom: 0">Fill out all the required fields and click on <b
               style="color: #000;">Save</b>.</p>
         </div>
@@ -73,20 +73,30 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <form action="/api/tips" method="post">
+      <form action="/api/audios" method="post" enctype="multipart/form-data">
         <div class="modal-body">
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="content">Tip content *</label>
-                <textarea name="content" id="content" cols="30" rows="10" class="form-control" required></textarea>
+                <label for="title">Audio title *</label>
+                <input type="text" name="title" id="title" class="form-control" placeholder="How to eat well?" required>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
-                <label for="date">Schedule for *</label>
-                <input type="date" name="date" id="date" class="form-control" required>
+              <div class="form-group">
+                <label for="category">Audio category *</label>
+                <input type="text" name="category" id="category" class="form-control" placeholder="Workout" required>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="audio">Audio file *</label>
+                <input type="file" name="audio" id="audio" accept="audio/*" class="form-control" required>
+              </div>
             </div>
           </div>
         </div>
@@ -100,16 +110,16 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
-<!-- End add tip modal -->
+<!-- End add audio modal -->
 
-<!-- Edit tip modal -->
-<div class="modal fade edit-tip-modal" tabindex="-1" role="dialog" aria-labelledby="Edit tip modal"
+<!-- Edit audio modal -->
+<div class="modal fade edit-audio-modal" tabindex="-1" role="dialog" aria-labelledby="Edit audio modal"
   style="display: none;" aria-modal="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <div class="col-md-10">
-          <h5 class="modal-title mt-0" id="myLargeModalLabel">Edit a tip</h5>
+          <h5 class="modal-title mt-0" id="myLargeModalLabel">Edit a audio</h5>
           <p class="card-title-desc" style="margin-bottom: 0">Fill out all the required fields and click on <b
               style="color: #000;">Save</b>.</p>
         </div>
@@ -118,20 +128,22 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <form id="edit-tip-form" action="/api/tips" method="post">
+      <form id="edit-audio-form" action="/api/audios" method="post">
         <div class="modal-body">
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="content">Tip content *</label>
-                <textarea name="content" id="content" cols="30" rows="10" class="form-control" required></textarea>
+                <label for="title">Audio title *</label>
+                <input type="text" name="title" id="title" class="form-control" placeholder="How to eat well?" required>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
-                <label for="date">Schedule for *</label>
-                <input type="date" name="date" id="date" class="form-control" required>
+              <div class="form-group">
+                <label for="category">Audio category *</label>
+                <input type="text" name="category" id="category" class="form-control" placeholder="Workout" required>
+              </div>
             </div>
           </div>
         </div>
@@ -145,7 +157,7 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
-<!-- End edit tip modal -->
+<!-- End edit audio modal -->
 
 <!-- Required datatable js -->
 <script src="/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -177,9 +189,9 @@
   const cookies = document.cookie.split(';');
 
   const disableInput = () => {
-    const input = $('#edit-tip-form').find('input');
-    const select = $('#edit-tip-form').find('select');
-    const textarea = $('#edit-tip-form').find('textarea');
+    const input = $('#edit-audio-form').find('input');
+    const select = $('#edit-audio-form').find('select');
+    const textarea = $('#edit-audio-form').find('textarea');
 
     for (item of input) {
       item.disabled = true;
@@ -195,9 +207,9 @@
   };
 
   const enableInput = () => {
-    const input = $('#edit-tip-form').find('input');
-    const select = $('#edit-tip-form').find('select');
-    const textarea = $('#edit-tip-form').find('textarea');
+    const input = $('#edit-audio-form').find('input');
+    const select = $('#edit-audio-form').find('select');
+    const textarea = $('#edit-audio-form').find('textarea');
 
     for (item of input) {
       item.disabled = false;
@@ -216,19 +228,19 @@
   $('table').DataTable({ lengthChange: !1, buttons: ["copy", "excel", "pdf", "colvis"] }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)");
 
   $('.edit').click(function () {
-    const tip_id = $(this)[0].dataset['tip'];
+    const audio_id = $(this)[0].dataset['audio'];
 
     $.ajax({
       method: 'GET',
-      url: '/api/tips/' + tip_id,
-      success: (tip) => {
-        $('#edit-tip-form #content').val(tip.content);
-        $('#edit-tip-form #date').val(moment(tip.date).format('YYYY-MM-DD'));
+      url: '/api/audios/' + audio_id,
+      success: (audio) => {
+        $('#edit-audio-form #title').val(audio.title);
+        $('#edit-audio-form #category').val(audio.category);
 
-        $('#edit-tip-form')[0].action = '/api/tips/' + tip_id + '/update';
+        $('#edit-audio-form')[0].action = '/api/audios/' + audio_id + '/update';
         enableInput();
 
-        $('.edit-tip-modal').modal('show');
+        $('.edit-audio-modal').modal('show');
       },
       error: (err) => {
         console.error(err);
@@ -237,19 +249,19 @@
   });
 
   $('.show').click(function () {
-    const tip_id = $(this)[0].dataset['tip'];
+    const audio_id = $(this)[0].dataset['audio'];
 
     $.ajax({
       method: 'GET',
-      url: '/api/tips/' + tip_id,
-      success: (tip) => {
-        $('#edit-tip-form #content').val(tip.content);
-        $('#edit-tip-form #date').val(moment(tip.date).format('YYYY-MM-DD'));
+      url: '/api/audios/' + audio_id,
+      success: (audio) => {
+        $('#edit-audio-form #title').val(audio.title);
+        $('#edit-audio-form #category').val(audio.category);
 
-        $('#edit-tip-form')[0].action = '/api/tips/' + tip_id + '/update';
+        $('#edit-audio-form')[0].action = '/api/audios/' + audio_id + '/update';
         disableInput();
 
-        $('.edit-tip-modal').modal('show');
+        $('.edit-audio-modal').modal('show');
       },
       error: (err) => {
         console.error(err);
@@ -258,11 +270,11 @@
   });
 
   $('.delete').click(function () {
-    const tip_id = $(this)[0].dataset['tip'];
+    const audio_id = $(this)[0].dataset['audio'];
 
     Swal.fire({
       title: 'Delete?',
-      text: "Are you sure you want to delete this tip?",
+      text: "Are you sure you want to delete this audio?",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#45cb85',
@@ -272,10 +284,10 @@
     }).then((result) => {
       if (result.value) {
         $.ajax({
-          url: '/api/tips/' + tip_id,
+          url: '/api/audios/' + audio_id,
           method: 'DELETE',
           success: (res) => {
-            Swal.fire('Tip deleted', res.message, 'success');
+            Swal.fire('Audio deleted', res.message, 'success');
             setTimeout(() => {
               window.location.reload();
             }, 2000);
