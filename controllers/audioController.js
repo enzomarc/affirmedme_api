@@ -11,7 +11,7 @@ exports.index = async (req, res) => {
   await Audio.find((err, audios) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: "Unable to find audios.", error: err });
+      return res.status(500).json({ message: "Unable to find podcasts.", error: err });
     }
 
     return res.json(audios);
@@ -30,7 +30,7 @@ exports.show = async (req, res) => {
   await Audio.findById(id, (err, audio) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: "Unable to find the specified audio.", error: err });
+      return res.status(500).json({ message: "Unable to find the specified podcast.", error: err });
     } 
 
     return res.json(audio);
@@ -49,12 +49,12 @@ exports.store = async (req, res) => {
   await Audio.findOne({ title: data.title }, async (err, audio) => {
     if (err) {
       console.error(err);
-      req.flash('error', "An error occurred during audio creation.");
+      req.flash('error', "An error occurred during podcast creation.");
       return res.status(500).redirect('/audios');
     }
 
     if (audio) {
-      req.flash('error', "An audio with the same title already exists.");
+      req.flash('error', "An podcast with the same title already exists.");
       return res.status(500).redirect('/audios');
     }
 
@@ -92,7 +92,7 @@ exports.update = async (req, res) => {
   await Audio.findById(id, async (err, audio) => {
     if (err) {
       console.error(err);
-      req.flash('error', "Unable to find specified audio.");
+      req.flash('error', "Unable to find specified podcast.");
       return res.status(500).redirect('/audios');
     }
 
@@ -104,14 +104,14 @@ exports.update = async (req, res) => {
       await audio.update(data, async (err, result) => {
         if (err) {
           console.error(err);
-          req.flash('error', "An error occurred during audio update.");
+          req.flash('error', "An error occurred during podcast update.");
           return res.status(500).redirect('/audios');
         }
 
-        req.flash('success', "Audio updated successfully.");
+        req.flash('success', "Podcast updated successfully.");
       });
     } else {
-      req.flash('error', "Unable to find the specified audio.");
+      req.flash('error', "Unable to find the specified podcast.");
     }
 
     return res.redirect('/audios');

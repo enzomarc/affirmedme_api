@@ -4,16 +4,16 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-10">
-            <h4 class="card-title">List of audios</h4>
+            <h4 class="card-title">List of podcasts</h4>
             {{#if populated}}
-            <p class="card-title-desc">This is where you can see the list of audios showed in the app.</p>
+            <p class="card-title-desc">This is where you can see the list of podcasts showed in the app.</p>
             {{else}}
-            <p class="card-title-desc">There's no audios available.</p>
+            <p class="card-title-desc">There's no podcasts available.</p>
             {{/if}}
           </div>
           <div class="col-md-2">
             <button class="btn btn-primary float-right" data-toggle="modal" data-target=".add-audio-modal"><i
-                class="bx bx-user-plus mr-2"></i>Add audio</button>
+                class="bx bx-user-plus mr-2"></i>Add podcast</button>
           </div>
         </div>
 
@@ -25,7 +25,7 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Audio title</th>
+              <th>Podcast title</th>
               <th>Category</th>
               <th>Actions</th>
             </tr>
@@ -64,7 +64,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="col-md-10">
-          <h5 class="modal-title mt-0" id="myLargeModalLabel">Add a audio</h5>
+          <h5 class="modal-title mt-0" id="myLargeModalLabel">Add a podcast</h5>
           <p class="card-title-desc" style="margin-bottom: 0">Fill out all the required fields and click on <b
               style="color: #000;">Save</b>.</p>
         </div>
@@ -78,7 +78,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="title">Audio title *</label>
+                <label for="title">Podcast title *</label>
                 <input type="text" name="title" id="title" class="form-control" placeholder="How to eat well?" required>
               </div>
             </div>
@@ -86,7 +86,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="category">Audio category *</label>
+                <label for="category">Podcast category *</label>
                 <input type="text" name="category" id="category" class="form-control" placeholder="Workout" required>
               </div>
             </div>
@@ -119,7 +119,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="col-md-10">
-          <h5 class="modal-title mt-0" id="myLargeModalLabel">Edit a audio</h5>
+          <h5 class="modal-title mt-0" id="myLargeModalLabel">Edit a podcast</h5>
           <p class="card-title-desc" style="margin-bottom: 0">Fill out all the required fields and click on <b
               style="color: #000;">Save</b>.</p>
         </div>
@@ -133,7 +133,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="title">Audio title *</label>
+                <label for="title">Podcast title *</label>
                 <input type="text" name="title" id="title" class="form-control" placeholder="How to eat well?" required>
               </div>
             </div>
@@ -141,7 +141,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label for="category">Audio category *</label>
+                <label for="category">Podcast category *</label>
                 <input type="text" name="category" id="category" class="form-control" placeholder="Workout" required>
               </div>
             </div>
@@ -275,7 +275,7 @@
 
     Swal.fire({
       title: 'Delete?',
-      text: "Are you sure you want to delete this audio?",
+      text: "Are you sure you want to delete this podcast?",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#45cb85',
@@ -288,7 +288,7 @@
           url: '/api/audios/' + audio_id,
           method: 'DELETE',
           success: (res) => {
-            Swal.fire('Audio deleted', res.message, 'success');
+            Swal.fire('Podcast deleted', res.message, 'success');
             parent.fadeOut();
           },
           error: (err) => {
