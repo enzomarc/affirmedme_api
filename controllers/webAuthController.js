@@ -4,11 +4,12 @@ const app = require('../app');
 // Web client login route
 exports.login = (req, res) => {
   const token = req.params.token;
+  const port = process.env.PORT || "3000";
 
   if (!token)
     return res.status(401).json({ message: "Invalid token provided." });
 
-  request.get('http://127.0.0.1:3000/api/auth/verify/' + token, (error, response, body) => {
+  request.get('http://127.0.0.1:' + port + '/api/auth/verify/' + token, (error, response, body) => {
     if (error) {
       console.error(error);
       req.session.destroy();
