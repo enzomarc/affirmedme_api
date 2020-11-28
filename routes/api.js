@@ -8,9 +8,11 @@ const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
 const tipController = require('../controllers/tipController');
 const audioController = require('../controllers/audioController');
+const todoController = require('../controllers/todoController')
 
 // Middleware
 const multer_audios = require("../middlewares/multer_audios");
+const auth = require("../middlewares/auth");
 
 
 // CORS Middleware
@@ -58,17 +60,12 @@ router.post('/register', userController.register);
 router.post('/login', userController.login);
 
 // Modules
-router.get('/modules/basic', moduleController.basic);
-router.get('/modules/premium', moduleController.premium);
-router.post('/modules', moduleController.store);
+router.get('/modules/basic', auth, moduleController.basic);
+router.get('/modules/premium', auth, moduleController.premium);
+router.post('/modules', auth, moduleController.store);
+router.delete('/modules/:module', auth, moduleController.delete);
 
 // Tips
-router.get('tips', tipController.index);
-router.get('daily_tip', tipController.daily);
-router.get('/tips/:tip', tipController.show);
-router.post('/tips', tipController.store);
-router.post('/tips/:tip/update', tipController.update);
-router.delete('/tips/:tip', tipController.delete);
 router.get('tips', auth, tipController.index);
 router.get('daily_tip', auth, tipController.daily);
 router.get('/tips/:tip', auth, tipController.show);

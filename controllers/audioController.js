@@ -130,8 +130,7 @@ exports.delete = async (req, res) => {
   await Audio.findById(id, async (err, audio) => {
     if (err) {
       console.error(err);
-      req.flash('error', "Unable to find the specified audio.");
-      return res.status(500).redirect('/audios');
+      return res.status(500).json({ message: "Unable to find the specified audio.", error: err });
     }
 
     // console.log(fs.existsSync(`${req.protocol}://${req.get('host')}/content/upload/audios/${audio.path}`));
@@ -141,10 +140,10 @@ exports.delete = async (req, res) => {
       //   fs.unlinkSync('..' + audio.path);
 
       await audio.deleteOne();
-      req.flash('success', "Audio file deleted successfully.");
+      return res.json({ message: "Podcast deleted successfully." });
+    } else {
+      return res.status(500).json({ message: "Unable to find the specified podcast.", error: err });
     }
-
-    return res.redirect('/audios');
   });
 }
 
