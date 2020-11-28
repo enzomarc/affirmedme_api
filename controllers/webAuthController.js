@@ -1,15 +1,19 @@
 const request = require('request');
 const app = require('../app');
 
-// Web client login route
+/**
+ * Web client login route
+ * 
+ * @param {import('express').Request} req 
+ * @param {*} res 
+ */
 exports.login = (req, res) => {
   const token = req.params.token;
-  const port = process.env.PORT || "3000";
 
   if (!token)
     return res.status(401).json({ message: "Invalid token provided." });
 
-  request.get('/api/auth/verify/' + token, (error, response, body) => {
+  request.get(req.protocol + '://' + req.hostname + ':' + req.socket.localPort + '/api/auth/verify/' + token, (error, response, body) => {
     if (error) {
       console.error(error);
       req.session.destroy();
