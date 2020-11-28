@@ -167,6 +167,6 @@ exports.page = async (req, res) => {
 
     const populated = audios.length > 0;
 
-    return res.render('audios', { layout: "main", title: "Audios", messages: _messages, populated: populated, audios: audios });
+    return res.render('audios', { layout: "main", title: "Podcasts", messages: _messages, populated: populated, audios: audios });
   });
 }
