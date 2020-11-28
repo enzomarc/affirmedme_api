@@ -259,6 +259,7 @@
 
   $('.delete').click(function () {
     const tip_id = $(this)[0].dataset['tip'];
+    const parent = $(this).parent().parent().parent();
 
     Swal.fire({
       title: 'Delete?',
@@ -276,9 +277,7 @@
           method: 'DELETE',
           success: (res) => {
             Swal.fire('Tip deleted', res.message, 'success');
-            setTimeout(() => {
-              window.location.reload();
-            }, 2000);
+            parent.fadeOut();
           },
           error: (err) => {
             console.error(err);
