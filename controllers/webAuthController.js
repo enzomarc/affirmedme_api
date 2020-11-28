@@ -13,7 +13,7 @@ exports.login = (req, res) => {
   if (!token)
     return res.status(401).json({ message: "Invalid token provided." });
 
-  request.get(req.protocol + '://' + req.hostname + ':' + req.socket.localPort + '/api/auth/verify/' + token, (error, response, body) => {
+  request.get(req.protocol + '://' + req.hostname + '/api/auth/verify/' + token, (error, response, body) => {
     if (error) {
       console.error(error);
       req.session.destroy();
