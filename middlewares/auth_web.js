@@ -4,7 +4,7 @@ module.exports = (req, res, next) => {
   if (req.session.user && req.cookies.access_token) {
     const token = req.cookies.access_token;
 
-    request.get('http://127.0.0.1:3000/api/auth/verify/' + token, (error, response, body) => {
+    request.get(req.protocol + '://' + req.hostname + '/api/auth/verify/' + token, (error, response, body) => {
       if (error) {
         console.error(error);
         req.session.destroy();
