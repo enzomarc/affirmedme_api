@@ -20,7 +20,10 @@ web.get('/', authMiddleware, (req, res, next) => {
   res.render('index', { layout: 'main', title: 'Dashboard' });
 });
 
+// Modules
 web.get('/modules', authMiddleware, moduleController.page);
+web.get('/modules/create', authMiddleware, moduleController.create);
+
 web.get('/tips', authMiddleware, tipController.page);
 web.get('/audios', authMiddleware, audioController.page);
 

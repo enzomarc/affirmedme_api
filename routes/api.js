@@ -69,14 +69,24 @@ router.get('/tips/:tip', tipController.show);
 router.post('/tips', tipController.store);
 router.post('/tips/:tip/update', tipController.update);
 router.delete('/tips/:tip', tipController.delete);
+router.get('tips', auth, tipController.index);
+router.get('daily_tip', auth, tipController.daily);
+router.get('/tips/:tip', auth, tipController.show);
+router.post('/tips', auth, tipController.store);
+router.post('/tips/:tip/update', auth, tipController.update);
+router.delete('/tips/:tip', auth, tipController.delete);
 
 // Audios
-router.get('/audios', audioController.index);
-router.get('/audios/:audio', audioController.show);
-router.post('/audios', multer_audios, audioController.store);
-router.post('/audios/:audio/update', multer_audios, audioController.update);
-router.delete('/audios/:audio', audioController.delete);
+router.get('/audios', auth, audioController.index);
+router.get('/audios/:audio', auth, audioController.show);
+router.post('/audios', multer_audios, auth, audioController.store);
+router.post('/audios/:audio/update', multer_audios, auth, audioController.update);
+router.delete('/audios/:audio', auth, audioController.delete);
 
-
+// Todos
+router.get('/todos/:user', auth, todoController.index);
+router.post('/todos/:user', auth, todoController.store);
+router.put('/todos/:user/:todo', auth, todoController.update);
+router.delete('/todos/:todo', auth, todoController.delete);
 
 module.exports = router;

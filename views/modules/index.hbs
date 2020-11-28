@@ -12,8 +12,8 @@
             {{/if}}
           </div>
           <div class="col-md-2">
-            <button class="btn btn-primary float-right" data-toggle="modal" data-target=".add-module-modal"><i
-                class="bx bx-user-plus mr-2"></i>Add module</button>
+            <a class="btn btn-primary float-right" href="/modules/create"><i
+                class="bx bx-user-plus mr-2"></i>Add module</a>
           </div>
         </div>
 
@@ -54,14 +54,7 @@
                 {{/if}}
               </td>
               <td>
-                <div class="btn-group mt-4 mt-md-0" role="group" aria-label="Module actions">
-                  <button type="button" title="Show" class="btn btn-primary show" data-module="{{module._id}}"><i
-                      class="bx bxs-show"></i></button>
-                  <button type="button" title="Edit" class="btn btn-primary edit" data-module="{{module._id}}"><i
-                      class="bx bx-edit-alt"></i></button>
-                  <button type="button" title="Delete" class="btn btn-danger delete" data-module="{{module._id}}"><i
-                      class="bx bx-trash"></i></button>
-                </div>
+                <button type="button" title="Delete" class="btn btn-sm btn-danger delete" data-module="{{module._id}}"><i class="bx bx-trash"></i> Delete</button>
               </td>
             </tr>
             {{/each}}
@@ -231,90 +224,32 @@
   // Init DataTable
   $('table').DataTable({ lengthChange: !1, buttons: ["copy", "excel", "pdf", "colvis"] }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)");
 
-  $('.edit').click(function () {
-    const module_id = $(this)[0].dataset['module'];
-
-    $.ajax({
-      method: 'GET',
-      url: '/api/module/' + module_id,
-      success: (module) => {
-        $('.edit-module-modal #first_name').val(module.first_name);
-        $('.edit-module-modal #last_name').val(module.last_name);
-        $('.edit-module-modal #birthdate').val(moment(module.birthdate).format('YYYY-MM-DD'));
-        $('.edit-module-modal #birthplace').val(module.birthplace);
-        $('.edit-module-modal #address').val(module.address);
-        $('.edit-module-modal #phone').val(module.phone);
-        $('.edit-module-modal #email').val(module.email);
-
-        $('.edit-module-modal #gender').find('option[value="' + module.gender + '"]')[0].selected = true
-        $('.edit-module-modal #type').find('option[value="' + module.type + '"]')[0].selected = true
-
-        $('#edit-module-form')[0].action = '/api/module/' + module.id + '/update';
-        enableInput();
-
-        $('.edit-module-modal').modal('show');
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
-  });
-
-  $('.show').click(function () {
-    const module_id = $(this)[0].dataset['module'];
-
-    $.ajax({
-      method: 'GET',
-      url: '/api/module/' + module_id,
-      success: (module) => {
-        $('.edit-module-modal #first_name').val(module.first_name);
-        $('.edit-module-modal #last_name').val(module.last_name);
-        $('.edit-module-modal #birthdate').val(moment(module.birthdate).format('YYYY-MM-DD'));
-        $('.edit-module-modal #birthplace').val(module.birthplace);
-        $('.edit-module-modal #address').val(module.address);
-        $('.edit-module-modal #phone').val(module.phone);
-        $('.edit-module-modal #email').val(module.email);
-
-        $('.edit-module-modal #gender').find('option[value="' + module.gender + '"]')[0].selected = true
-        $('.edit-module-modal #type').find('option[value="' + module.type + '"]')[0].selected = true
-
-        $('#edit-module-form')[0].action = '/api/module/' + module.id + '/update';
-        disableInput();
-
-        $('.edit-module-modal').modal('show');
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
-  });
-
+  
   $('.delete').click(function () {
     const module_id = $(this)[0].dataset['module'];
+    const parent = $(this).parent().parent();
 
     Swal.fire({
-      title: 'Confirmation de suppression',
-      text: "Êtes vous sûr de vouloir supprimer ce personnel?",
+      title: 'Delete?',
+      text: "Are you sure you want to delete this module?",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#45cb85',
       cancelButtonColor: '#9095ad',
-      confirmButtonText: 'Oui, supprimer',
-      cancelButtonText: 'Annuler'
+      confirmButtonText: 'Yes, delete',
+      cancelButtonText: 'Cancel'
     }).then((result) => {
       if (result.value) {
         $.ajax({
-          url: '/api/module/' + module_id + '/delete',
-          method: 'GET',
+          url: '/api/modules/' + module_id,
+          method: 'DELETE',
           success: (res) => {
-            Swal.fire('Suppression effectuée', res.message, 'success');
-            setTimeout(() => {
-              window.location.reload();
-            }, 2000);
+            Swal.fire('Module deleted', res.message, 'success');
+            parent.fadeOut();
           },
           error: (err) => {
             console.error(err);
-            Swal.fire('Erreur de suppression', err.responseJSON.message, 'error');
+            Swal.fire('Error', err.responseJSON.message, 'error');
           }
         });
       }

@@ -3,7 +3,13 @@ const mongoose = require('mongoose');
 // Define the model schema
 const schema = new mongoose.Schema({
   title: { type: String, required: true },
-  steps: [{ type: mongoose.Types.ObjectId, ref: 'ModuleStep' }],
+  steps: [{
+    title: { type: String, required: true },
+    goals: [{
+      title: String,
+      tips: [{ type: String }],
+    }],
+  }],
   type: { type: String, required: true },
   active: { type: Boolean, default: true }
 }, { timestamps: true });
