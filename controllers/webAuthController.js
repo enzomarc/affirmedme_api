@@ -9,7 +9,7 @@ exports.login = (req, res) => {
   if (!token)
     return res.status(401).json({ message: "Invalid token provided." });
 
-  request.get('http://127.0.0.1:' + port + '/api/auth/verify/' + token, (error, response, body) => {
+  request.get('/api/auth/verify/' + token, (error, response, body) => {
     if (error) {
       console.error(error);
       req.session.destroy();
