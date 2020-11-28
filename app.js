@@ -60,6 +60,7 @@ app.engine('hbs', handlebars({
 
 // Serve static files
 app.use(express.static('public'));
+app.use(express.static('content'));
 
 // Check if user cookie exists while there's no user in session
 app.use((req, res, next) => {
