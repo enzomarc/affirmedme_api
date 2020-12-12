@@ -14,8 +14,11 @@ const viewHelpers = require('./util/view_helpers');
 const routes = require('./routes/web');
 const apiRoutes = require('./routes/api');
 
+const prodDB = "mongodb+srv://admin:admin237@affirmedcluster.346yk.mongodb.net/affirmedme?retryWrites=true&w=majority";
+const localDB = "mongodb://127.0.0.1:27017/affirmedme";
+
 mongoose
-  .connect("mongodb+srv://admin:admin237@affirmedcluster.346yk.mongodb.net/affirmedme?retryWrites=true&w=majority", {
+  .connect(localDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

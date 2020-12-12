@@ -10,9 +10,7 @@ module.exports = (req, res, next) => {
   jwt.verify(token, Constants.TOKEN_SECRET, (err, decoded) => {
     if (err)
       return res.status(403).json({ message: "You don't have required authorization." });
-
-      console.log(decoded);
-
+      
     return next();
   });
 }

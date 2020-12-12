@@ -8,7 +8,8 @@ const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
 const tipController = require('../controllers/tipController');
 const audioController = require('../controllers/audioController');
-const todoController = require('../controllers/todoController')
+const todoController = require('../controllers/todoController');
+const goalController = require('../controllers/goalController');
 
 // Middleware
 const multer_audios = require("../middlewares/multer_audios");
@@ -58,6 +59,7 @@ router.get('/auth/verify/:token', authController.verify);
 // User Auth
 router.post('/register', userController.register);
 router.post('/login', userController.login);
+router.get('/check/:token', userController.check);
 
 // Modules
 router.get('/modules/basic', auth, moduleController.basic);
@@ -85,5 +87,11 @@ router.get('/todos/:user', auth, todoController.index);
 router.post('/todos/:user', auth, todoController.store);
 router.put('/todos/:user/:todo', auth, todoController.update);
 router.delete('/todos/:todo', auth, todoController.delete);
+
+// Goals
+router.get('/goals/:user', auth, goalController.index);
+router.post('/goals/:user', auth, goalController.store);
+router.put('/goals/:user/:goal', auth, goalController.update);
+router.delete('/goals/:goal', auth, goalController.delete);
 
 module.exports = router;

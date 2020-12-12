@@ -1,8 +1,8 @@
 const User = require('../models/user');
-const Todo = require('../models/todo');
+const Goal = require('../models/goal');
 
 /**
- * Get todos of the given user.
+ * Get goals of the given user.
  * 
  * @param {*} req 
  * @param {*} res 
@@ -13,24 +13,24 @@ exports.index = async (req, res) => {
   await User.findById(id, async (err, user) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: "Unable to get user todos.", error: err });
+      return res.status(500).json({ message: "Unable to get user goals.", error: err });
     }
 
-    let todos = [];
+    let goals = [];
 
     if (user) {
       if (!user.active)
         return res.status(401).json({ message: "User account is disabled." });
 
-      todos = await Todo.find({ user: id });
+      goals = await Goal.find({ user: id });
     }
 
-    return res.json(todos);
+    return res.json(goals);
   });
 }
 
 /**
- * Store newly created todo.
+ * Store newly created goal.
  * 
  * @param {*} req 
  * @param {*} res 
@@ -47,8 +47,8 @@ exports.store = async (req, res) => {
 
     if (user) {
       data.user = user._id;
-      const todo = new Todo(data);
-      await todo.save();
+      const goal = new Goal(data);
+      await goal.save();
     } else {
       return res.status(500).json({ message: "Unable to find the specified user." });
     }
@@ -56,14 +56,14 @@ exports.store = async (req, res) => {
 }
 
 /**
- * Update the given todo with new data.
+ * Update the given goal with new data.
  * 
  * @param {*} req 
  * @param {*} res 
  */
 exports.update = async (req, res) => {
   const id = req.params.user;
-  const todo_id = req.params.todo;
+  const goal_id = req.params.goal;
   const data = req.body;
 
   await User.findById(id, async (err, user) => {
@@ -73,17 +73,17 @@ exports.update = async (req, res) => {
     }
 
     if (user) {
-      await Todo.findById(todo_id, async (err, todo) => {
+      await Goal.findById(goal_id, async (err, goal) => {
         if (err) {
           console.error(err);
-          return res.status(500).json({ message: "Unable to find the specified todo.", error: err });
+          return res.status(500).json({ message: "Unable to find the specified goal.", error: err });
         }
 
-        if (todo) {
-          await todo.update(data);
-          return res.json({ message: "Todo updated successfully.", todo: todo });
+        if (goal) {
+          await goal.update(data);
+          return res.json({ message: "Goal updated successfully.", goal: goal });
         } else {
-          return res.status(500).json({ message: "Unable to find the specified todo." });
+          return res.status(500).json({ message: "Unable to find the specified goal." });
         }
       });
     } else {
@@ -93,23 +93,23 @@ exports.update = async (req, res) => {
 }
 
 /**
- * Delete the given todo.
+ * Delete the given goal.
  * 
  * @param {*} req 
  * @param {*} res 
  */
 exports.delete = async (req, res) => {
-  const id = req.params.todo;
+  const id = req.params.goal;
 
-  await Todo.findById(id, async (err, todo) => {
+  await Goal.findById(id, async (err, goal) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: "Unable to find the specified todo.", error: err });
+      return res.status(500).json({ message: "Unable to find the specified goal.", error: err });
     }
 
-    if (todo)
-      await todo.deleteOne();
+    if (goal)
+      await goal.deleteOne();
 
-    return res.json({ message: "Todo deleted successfully." });
+    return res.json({ message: "Goal deleted successfully." });
   });
 }
