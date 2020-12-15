@@ -18,6 +18,8 @@ exports.register = async (req, res) => {
     if (data.premium)
         data.active = false;
 
+    console.log(data);
+
     const emailExists = await User.findOne({ email: data.email });
     const phoneExists = await User.findOne({ phone: data.phone });
 
@@ -28,9 +30,7 @@ exports.register = async (req, res) => {
         const payload = { id: user._id, name: user.name, email: user.email, phone: user.phone, premium: user.premium };
         const token = jwt.sign(payload, constants.TOKEN_SECRET, { expiresIn: '7d' });
 
-        console.log(payload);
-
-        return res.status(201).json({ message: "User account created successfully.", token: token, user: user });
+        return res.status(201).json({ message: "User account created successfully.", token: token, user: payload });
     }
 
     return res.status(500).json({ message: "User with same phone or e-mail address already exists." });
@@ -76,29 +76,35 @@ exports.login = async (req, res) => {
  */
 exports.check = async (req, res) => {
     const token = req.params.token;
-    jwt.verify(token, constants.TOKEN_SECRET, async (err, decoded) => {
-        if (err) {
-            console.error(err);
-            return res.status(401).json({ message: "Invalid token provided.", error: err });
-        }
 
-        const id = decoded.id;
-
-        await User.findById(id, (err, user) => {
+    try {
+        jwt.verify(token, constants.TOKEN_SECRET, async (err, decoded) => {
             if (err) {
                 console.error(err);
-                return res.status(401).json({ message: "Unable to find the user account.", error: err });
+                return res.status(401).json({ message: "Invalid token provided.", error: err });
             }
-
-            if (user) {
-                if (!user.active)
-                    return res.status(401).json({ message: "User account disabled." });
-
-                const token = jwt.sign(decoded, constants.TOKEN_SECRET, { expiresIn: '7d' });
-                return res.json({ token: token, user: decoded });
-            } else {
-                return res.status(401).json({ message: "Unable to find the user account.", error: err });
-            }
+    
+            const id = decoded.id;
+    
+            await User.findById(id, (err, user) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(401).json({ message: "Unable to find the user account.", error: err });
+                }
+    
+                if (user) {
+                    if (!user.active)
+                        return res.status(401).json({ message: "User account disabled." });
+    
+                    const token = jwt.sign(decoded, constants.TOKEN_SECRET);
+                    return res.json({ token: token, user: decoded });
+                } else {
+                    return res.status(401).json({ message: "Unable to find the user account.", error: err });
+                }
+            });
         });
-    });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ message: "An error occured during verification.", error: e });
+    }
 }
