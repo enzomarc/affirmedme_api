@@ -39,6 +39,8 @@ exports.store = async (req, res) => {
   const id = req.params.user;
   const data = req.body;
 
+  console.log(data);
+
   await User.findById(id, async (err, user) => {
     if (err) {
       console.error(err);
@@ -46,9 +48,32 @@ exports.store = async (req, res) => {
     }
 
     if (user) {
-      data.user = user._id;
-      const goal = new Goal(data);
-      await goal.save();
+      Object.keys(data).forEach(objective => {
+        const goals = data[objective];
+
+        goals.forEach(async (content) => {
+          await Goal.find({ user: user._id, objective: objective, content: content }, async (err, result) => {
+            if (err) {
+              console.error(err);
+              return res.status(500).json({ message: "An error occured during save.", error: err });
+            }
+
+            if (result.length <= 0) {
+              const goal = new Goal({ user: user._id, objective: objective, content: content });
+              await goal.save((err, saved) => {
+                if (err) {
+                  console.error(err);
+                  return res.status(500).json({ message: "An error occured during save.", error: err });
+                }
+              });
+            } else {
+              console.log("Goal already exists.");
+            }
+          });
+        });
+      });
+
+      return res.status(201).json({ message: "Goals saved successfully.", goals: data });
     } else {
       return res.status(500).json({ message: "Unable to find the specified user." });
     }
