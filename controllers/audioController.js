@@ -58,8 +58,9 @@ exports.store = async (req, res) => {
       return res.status(500).redirect('/audios');
     }
 
-    if (req.file) {
-      data.path = `/content/upload/audios/${req.file.filename}`;
+    if (req.files.length > 1) {
+      data.path = `/content/${req.files[0].filename}`;
+      data.image = `/content/${req.files[1].filename}`;
       const audio = new Audio(data);
 
       await audio.save((err, saved) => {

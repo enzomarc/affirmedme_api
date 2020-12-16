@@ -13,7 +13,7 @@ const goalController = require('../controllers/goalController');
 const contactController = require('../controllers/contactController');
 
 // Middleware
-const multer_audios = require("../middlewares/multer_audios");
+const multer = require("../middlewares/multer");
 const auth = require("../middlewares/auth");
 
 
@@ -79,8 +79,8 @@ router.delete('/tips/:tip', auth, tipController.delete);
 // Audios
 router.get('/audios', auth, audioController.index);
 router.get('/audios/:audio', auth, audioController.show);
-router.post('/audios', multer_audios, auth, audioController.store);
-router.post('/audios/:audio/update', multer_audios, auth, audioController.update);
+router.post('/audios', auth, multer, audioController.store);
+router.post('/audios/:audio/update', multer, auth, audioController.update);
 router.delete('/audios/:audio', auth, audioController.delete);
 
 // Reminders
