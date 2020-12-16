@@ -39,8 +39,6 @@ exports.store = async (req, res) => {
   const id = req.params.user;
   const data = req.body;
 
-  console.log(data);
-
   await User.findById(id, async (err, user) => {
     if (err) {
       console.error(err);
@@ -48,6 +46,14 @@ exports.store = async (req, res) => {
     }
 
     if (user) {
+      await Goal.find({ user: user._id }, async (err, goals) => {
+        if (err) console.error(err);
+
+        goals.forEach(async (goal) => {
+          await goal.deleteOne();
+        });
+      }).catch((err) => console.error(err));
+
       Object.keys(data).forEach(objective => {
         const goals = data[objective];
 
