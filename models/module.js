@@ -11,6 +11,7 @@ const schema = new mongoose.Schema({
     }],
   }],
   type: { type: String, required: true },
+  instruction: String,
   active: { type: Boolean, default: true }
 }, { timestamps: true });
 
