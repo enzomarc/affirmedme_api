@@ -10,6 +10,7 @@ const tipController = require('../controllers/tipController');
 const audioController = require('../controllers/audioController');
 const reminderController = require('../controllers/reminderController');
 const goalController = require('../controllers/goalController');
+const contactController = require('../controllers/contactController');
 
 // Middleware
 const multer_audios = require("../middlewares/multer_audios");
@@ -94,5 +95,10 @@ router.post('/goals/:user', auth, goalController.store);
 router.put('/goals/:user/:goal', auth, goalController.update);
 router.delete('/goals/:goal', auth, goalController.delete);
 
+// Contacts
+router.get('/contacts/:user', auth, contactController.index);
+router.post('/contacts/:user', auth, contactController.store);
+router.put('/contacts/:user/:contact', auth, contactController.update);
+router.delete('/contacts/:contact', auth, contactController.delete);
 
 module.exports = router;
