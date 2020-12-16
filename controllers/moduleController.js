@@ -1,4 +1,5 @@
 const Module = require("../models/module");
+const User = require("../models/user");
 
 /**
  * Show modules page.
@@ -54,9 +55,7 @@ exports.basic = async (req, res) => {
         .json({ message: "Unable to get all the basic modules.", error: err });
     }
 
-    if (doc) {
-      return res.json(doc);
-    }
+    return res.json(doc);
   });
 };
 
@@ -67,16 +66,31 @@ exports.basic = async (req, res) => {
  * @param {*} res
  */
 exports.premium = async (req, res) => {
-  await Module.find({ type: "premium" }, (err, doc) => {
+  const id = req.params.user;
+
+  await User.findById(id, async (err, user) => {
     if (err) {
       console.error(err);
-      return res
-        .status(500)
-        .json({ message: "Unable to get all the basic modules.", error: err });
+      return res.status(500).json({ message: "Unable to find the specified user.", error: err });
     }
 
-    if (doc) {
-      return res.json(doc);
+    if (user) {
+      if (user.premium) {
+        await Module.find({ type: "premium" }, (err, modules) => {
+          if (err) {
+            console.error(err);
+            return res
+              .status(500)
+              .json({ message: "Unable to get all the basic modules.", error: err });
+          }
+      
+          return res.json(modules);
+        });
+      } else {
+        return res.status(401).json({ message: "You don't have access to premium modules." });
+      }
+    } else {
+      return res.status(500).json({ message: "Unable to find the specified user.", error: err });
     }
   });
 };

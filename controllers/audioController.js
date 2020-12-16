@@ -19,6 +19,29 @@ exports.index = async (req, res) => {
 }
 
 /**
+ * Get audios categories.
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.categories = async (req, res) => {
+  await Audio.find((err, audios) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Unable to find podcasts.", error: err });
+    }
+
+    let categories = [];
+
+    audios.forEach((audio) => {
+      if (!categories.includes(audio.category)) categories.push(audio.category);
+    });
+
+    return res.json(categories);
+  });
+}
+
+/**
  * Get given audio information.
  * 
  * @param {*} req 
@@ -59,8 +82,8 @@ exports.store = async (req, res) => {
     }
 
     if (req.files.length > 1) {
-      data.path = `/content/${req.files[0].filename}`;
-      data.image = `/content/${req.files[1].filename}`;
+      data.path = `/upload/${req.files[0].filename}`;
+      data.image = `/upload/${req.files[1].filename}`;
       const audio = new Audio(data);
 
       await audio.save((err, saved) => {

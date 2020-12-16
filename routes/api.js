@@ -64,7 +64,7 @@ router.get('/check/:token', userController.check);
 
 // Modules
 router.get('/modules/basic', auth, moduleController.basic);
-router.get('/modules/premium', auth, moduleController.premium);
+router.get('/modules/premium/:user', auth, moduleController.premium);
 router.post('/modules', auth, moduleController.store);
 router.delete('/modules/:module', auth, moduleController.delete);
 
@@ -78,6 +78,7 @@ router.delete('/tips/:tip', auth, tipController.delete);
 
 // Audios
 router.get('/audios', auth, audioController.index);
+router.get('/audios/categories', auth, audioController.categories);
 router.get('/audios/:audio', auth, audioController.show);
 router.post('/audios', auth, multer, audioController.store);
 router.post('/audios/:audio/update', multer, auth, audioController.update);
