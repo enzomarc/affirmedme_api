@@ -22,7 +22,7 @@ exports.index = async (req, res) => {
       if (!user.active)
         return res.status(401).json({ message: "User account is disabled." });
 
-      dates = await Date.find({ user: id, done: false });
+      dates = await Date.find({ user: id });
     }
 
     return res.json(dates);
