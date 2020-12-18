@@ -18,7 +18,7 @@ const prodDB = "mongodb+srv://admin:admin237@affirmedcluster.346yk.mongodb.net/a
 const localDB = "mongodb://127.0.0.1:27017/affirmedme";
 
 mongoose
-  .connect(localDB, {
+  .connect(prodDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
