@@ -9,6 +9,7 @@ const userController = require('../controllers/userController');
 const tipController = require('../controllers/tipController');
 const audioController = require('../controllers/audioController');
 const reminderController = require('../controllers/reminderController');
+const dateController = require('../controllers/dateController');
 const goalController = require('../controllers/goalController');
 const contactController = require('../controllers/contactController');
 
@@ -89,6 +90,12 @@ router.get('/reminders/:user', auth, reminderController.index);
 router.post('/reminders/:user', auth, reminderController.store);
 router.put('/reminders/:user/:reminder', auth, reminderController.update);
 router.delete('/reminders/:user/:reminder', auth, reminderController.delete);
+
+// Dates
+router.get('/dates/:user', auth, dateController.index);
+router.post('/dates/:user', auth, dateController.store);
+router.put('/dates/:user/:date', auth, dateController.update);
+router.delete('/dates/:user/:date', auth, dateController.delete);
 
 // Goals
 router.get('/goals/:user', auth, goalController.index);
