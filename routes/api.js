@@ -12,6 +12,7 @@ const reminderController = require('../controllers/reminderController');
 const dateController = require('../controllers/dateController');
 const goalController = require('../controllers/goalController');
 const contactController = require('../controllers/contactController');
+const mealController = require('../controllers/mealController');
 
 // Middleware
 const multer = require("../middlewares/multer");
@@ -108,5 +109,11 @@ router.get('/contacts/:user', auth, contactController.index);
 router.post('/contacts/:user', auth, contactController.store);
 router.put('/contacts/:user/:contact', auth, contactController.update);
 router.delete('/contacts/:contact', auth, contactController.delete);
+
+// Meal Plans
+router.get('/meals/:user', auth, mealController.index);
+router.post('/meals/:user', auth, mealController.store);
+router.put('/meals/:user/:meal', auth, mealController.update);
+router.delete('/meals/:user/:meal', auth, mealController.delete);
 
 module.exports = router;
