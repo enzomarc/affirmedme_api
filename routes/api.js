@@ -11,6 +11,7 @@ const audioController = require('../controllers/audioController');
 const reminderController = require('../controllers/reminderController');
 const goalController = require('../controllers/goalController');
 const contactController = require('../controllers/contactController');
+const ocrController = require('../controllers/ocrController');
 
 // Middleware
 const multer = require("../middlewares/multer");
@@ -83,6 +84,9 @@ router.get('/audios/:audio', auth, audioController.show);
 router.post('/audios', auth, multer, audioController.store);
 router.post('/audios/:audio/update', multer, auth, audioController.update);
 router.delete('/audios/:audio', auth, audioController.delete);
+
+//OCR
+router.post('/ocr-scan', auth, ocrController.scan);
 
 // Reminders
 router.get('/reminders/:user', auth, reminderController.index);
