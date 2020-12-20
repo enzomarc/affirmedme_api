@@ -12,6 +12,7 @@ const reminderController = require('../controllers/reminderController');
 const dateController = require('../controllers/dateController');
 const goalController = require('../controllers/goalController');
 const contactController = require('../controllers/contactController');
+const ocrController = require('../controllers/ocrController');
 const mealController = require('../controllers/mealController');
 
 // Middleware
@@ -85,6 +86,9 @@ router.get('/audios/:audio', auth, audioController.show);
 router.post('/audios', auth, multer, audioController.store);
 router.post('/audios/:audio/update', multer, auth, audioController.update);
 router.delete('/audios/:audio', auth, audioController.delete);
+
+//OCR
+router.post('/ocr-scan', auth, ocrController.scan);
 
 // Reminders
 router.get('/reminders/:user', auth, reminderController.index);
