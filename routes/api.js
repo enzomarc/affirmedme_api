@@ -9,9 +9,11 @@ const userController = require('../controllers/userController');
 const tipController = require('../controllers/tipController');
 const audioController = require('../controllers/audioController');
 const reminderController = require('../controllers/reminderController');
+const dateController = require('../controllers/dateController');
 const goalController = require('../controllers/goalController');
 const contactController = require('../controllers/contactController');
 const ocrController = require('../controllers/ocrController');
+const mealController = require('../controllers/mealController');
 
 // Middleware
 const multer = require("../middlewares/multer");
@@ -94,6 +96,12 @@ router.post('/reminders/:user', auth, reminderController.store);
 router.put('/reminders/:user/:reminder', auth, reminderController.update);
 router.delete('/reminders/:user/:reminder', auth, reminderController.delete);
 
+// Dates
+router.get('/dates/:user', auth, dateController.index);
+router.post('/dates/:user', auth, dateController.store);
+router.put('/dates/:user/:date', auth, dateController.update);
+router.delete('/dates/:user/:date', auth, dateController.delete);
+
 // Goals
 router.get('/goals/:user', auth, goalController.index);
 router.post('/goals/:user', auth, goalController.store);
@@ -105,5 +113,11 @@ router.get('/contacts/:user', auth, contactController.index);
 router.post('/contacts/:user', auth, contactController.store);
 router.put('/contacts/:user/:contact', auth, contactController.update);
 router.delete('/contacts/:contact', auth, contactController.delete);
+
+// Meal Plans
+router.get('/meals/:user', auth, mealController.index);
+router.post('/meals/:user', auth, mealController.store);
+router.put('/meals/:user/:meal', auth, mealController.update);
+router.delete('/meals/:user/:meal', auth, mealController.delete);
 
 module.exports = router;
