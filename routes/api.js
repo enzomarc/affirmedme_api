@@ -68,7 +68,9 @@ router.get('/check/:token', userController.check);
 // Modules
 router.get('/modules/basic', auth, moduleController.basic);
 router.get('/modules/premium/:user', auth, moduleController.premium);
+router.get('/modules/:user/checked', auth, moduleController.checked);
 router.post('/modules', auth, moduleController.store);
+router.post('/modules/:user/check', auth, moduleController.check);
 router.delete('/modules/:module', auth, moduleController.delete);
 
 // Tips
@@ -110,6 +112,9 @@ router.delete('/goals/:goal', auth, goalController.delete);
 
 // Contacts
 router.get('/contacts/:user', auth, contactController.index);
+router.get('/contacts/:contact/notes', contactController.notes);
+router.post('/contacts/:contact/notes', contactController.storeNote);
+router.delete('/contacts/:contact/notes/:note', contactController.deleteNote);
 router.post('/contacts/:user', auth, contactController.store);
 router.put('/contacts/:user/:contact', auth, contactController.update);
 router.delete('/contacts/:contact', auth, contactController.delete);
