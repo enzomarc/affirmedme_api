@@ -9,7 +9,7 @@ async function quickstart() {
   const [result] = await client.textDetection('./ressources/preview-xl.jpg');
   console.log(result)
   const labels = result.textAnnotations;
-  console.log('Labels:');
+  console.log('Labels: ');
   labels.forEach(label => console.log(label.description));
 }
 quickstart();
