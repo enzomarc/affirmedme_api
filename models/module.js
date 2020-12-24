@@ -7,6 +7,7 @@ const schema = new mongoose.Schema({
     title: { type: String, required: true },
     goals: [{
       title: String,
+      checked: { type: Boolean, default: false },
       tips: [{ type: String }],
     }],
   }],

@@ -96,6 +96,93 @@ exports.premium = async (req, res) => {
 };
 
 /**
+ * Load checked items from modules.
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.checked = async (req, res) => {
+  const id = req.params.user;
+
+  await User.findById(id, async (err, user) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Unable to find the specified user.", error: err });
+    }
+
+    if (user) {
+      let goals = [];
+      let checked = [];
+
+      await Module.find((err, result) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ message: "An error occurred, unable to load checked goals.", error: err });
+        }
+
+        result.forEach((module) => {
+          module.steps.forEach((step) => {
+            step.goals.forEach((goal) => goals.push(goal));
+          });
+        });
+      });
+
+      goals.forEach((goal) => {
+        if (goal.checked) checked.push(goal);
+      });
+
+      return res.json(checked);
+    } else {
+      return res.status(500).json({ message: "Unable to find the specified user.", error: err });
+    }
+  });
+}
+
+/**
+ * Toggle module item check state.
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.check = async (req, res) => {
+  const id = req.params.user;
+  const title = req.body.title;
+
+  await User.findById(id, async (err, user) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Unable to find the specified user.", error: err });
+    }
+
+    if (user) {
+      let goals = [];
+
+      await Module.find((err, result) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ message: "An error occurred, unable to load checked goals.", error: err });
+        }
+
+        result.forEach((module) => {
+          module.steps.forEach((step) => {
+            step.goals.forEach(async (goal) => {
+              if (goal.title.toLowerCase() == title) {
+                goal.checked = !goal.checked;
+                await module.save();
+
+                return res.json(goal.checked);
+              }
+            });
+          });
+        });
+      });
+    } else {
+      return res.status(500).json({ message: "Unable to find the specified user.", error: err });
+    }
+  });
+}
+
+/**
  * Store newly created module.
  *
  * @param {*} req
