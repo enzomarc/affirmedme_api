@@ -134,3 +134,89 @@ exports.delete = async (req, res) => {
     }
   });
 }
+
+/**
+ * Get given contact notes.
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.notes = async (req, res) => {
+  const id = req.params.contact;
+
+  await Contact.findById(id, async (err, contact) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Unable to retrieve contact notes.", error: err });
+    }
+
+    if (contact) {
+      return res.json(contact.notes);
+    } else {
+      return res.status(500).json({ message: "Unable to retrieve contact." });
+    }
+  });
+}
+
+/**
+ * Create a new note for the given contact.
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.storeNote = async (req, res) => {
+  const id = req.params.contact;
+
+  await Contact.findById(id, async (err, contact) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Unable to retrieve contact notes.", error: err });
+    }
+
+    if (contact) {
+      const data = req.body;
+      contact.notes.push(data);
+
+      await contact.save((err, saved) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ message: "Unable to retrieve contact notes.", error: err });
+        }
+
+        return res.status(201).json({ message: "Contact notes stored successfully.", notes: saved.notes });
+      });
+    } else {
+      return res.status(500).json({ message: "Unable to retrieve contact." });
+    }
+  });
+}
+
+/**
+ * Delete note from the given contact.
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.deleteNote = async (req, res) => {
+  const id =  req.params.contact;
+  const index = req.params.note;
+
+  await Contact.findById(id, async (err, contact) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Unable to delete the given note.", error: err });
+    }
+
+    if (contact) {
+      contact.notes.splice(index);
+      await contact.save((err, saved) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ message: "Unable to retrieve contact notes.", error: err });
+        }
+
+        return res.status(201).json({ message: "Note deleted successfully.", notes: saved.notes });
+      });
+    }
+  });
+}
