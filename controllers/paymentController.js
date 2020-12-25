@@ -88,14 +88,14 @@ exports.addCard = async (req, res) => {
     type: 'card',
     card: {
       number: data.number,
-      exp_month: data.month,
-      exp_year: data.year,
+      exp_month: data.exp.split('/')[0],
+      exp_year: data.exp.split('/')[1],
       cvc: data.cvc,
     },
   })
     .then((method) => {
       console.log(method);
-      return res.json(method);
+      return res.status(201).json(method);
     })
     .catch((err) => {
       console.error(err);

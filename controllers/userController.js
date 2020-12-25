@@ -19,7 +19,7 @@ exports.register = async (req, res) => {
   const phoneExists = await User.findOne({ phone: data.phone });
 
   if (!emailExists && !phoneExists) {
-    if (data.premium) {
+    if (data.premium || data.card) {
       // disable user account if registration is premium and payment not succeeded
       await Payment.findById(data.payment, async (err, payment) => {
         if (err) {
@@ -28,8 +28,13 @@ exports.register = async (req, res) => {
         }
         
         data.active = payment && payment.status == 'succeeded';
+        data.premium = payment && payment.status == 'succeeded';
         const user = new User(data);
         await user.save();
+
+        // update payment user
+        payment.user = user._id;
+        await payment.save();
     
         if (user.active) {
           const payload = { id: user._id, name: user.name, email: user.email, phone: user.phone, premium: user.premium };
@@ -49,9 +54,9 @@ exports.register = async (req, res) => {
   
       return res.status(201).json({ message: "User account created successfully.", token: token, user: payload });
     }
+  } else {
+    return res.status(500).json({ message: "User with same phone or e-mail address already exists." });
   }
-
-  return res.status(500).json({ message: "User with same phone or e-mail address already exists." });
 }
 
 /**
@@ -111,6 +116,7 @@ exports.check = async (req, res) => {
         }
 
         if (user) {
+          console.log(user);
           if (!user.active)
             return res.status(401).json({ message: "User account disabled." });
 
