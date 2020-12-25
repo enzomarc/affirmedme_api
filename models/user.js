@@ -7,7 +7,13 @@ const schema = new mongoose.Schema({
   phone: { type: String, required: true },
   password: { type: String, required: true },
   active: { type: Boolean, default: true },
-  premium: { type: Boolean, default: false }
+  premium: { type: Boolean, default: false },
+  card: {
+    card_id: String,
+    number: String,
+    exp: String,
+    cvc: String
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', schema);

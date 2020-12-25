@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const router = express.Router();
 
 // Controllers
+const paymentController = require('../controllers/paymentController');
 const moduleController = require('../controllers/moduleController');
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
@@ -64,6 +65,11 @@ router.get('/auth/verify/:token', authController.verify);
 router.post('/register', userController.register);
 router.post('/login', userController.login);
 router.get('/check/:token', userController.check);
+
+// Payments
+router.post('/payments/create', paymentController.create);
+router.post('/payments/:payment/confirm', paymentController.confirm);
+router.post('/payments/cards', paymentController.addCard);
 
 // Modules
 router.get('/modules/basic', auth, moduleController.basic);
