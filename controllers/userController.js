@@ -67,7 +67,7 @@ exports.register = async (req, res) => {
  */
 exports.login = async (req, res) => {
   const credentials = req.body;
-
+  
   await User.findOne({ email: credentials.email }, async (err, user) => {
     if (err) {
       console.error(err);

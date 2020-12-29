@@ -12,6 +12,8 @@ const constants = require('../util/constants');
 exports.auth = async (req, res) => {
   const credentials = { email: req.body.email, password: req.body.password };
 
+  // await Admin.create({ name: "Enzo Marc", email: "emarc237@gmail.com", password: bcrypt.hashSync('password', bcrypt.genSaltSync()) });
+
   await Admin.findOne({ email: credentials.email }, async (err, user) => {
     if (err) {
         console.error(err);
