@@ -76,7 +76,7 @@ exports.premium = async (req, res) => {
 
     if (user) {
       if (user.premium) {
-        await Module.find({ type: "premium" }, (err, modules) => {
+        await Module.find((err, modules) => {
           if (err) {
             console.error(err);
             return res
