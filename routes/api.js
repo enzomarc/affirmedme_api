@@ -88,12 +88,12 @@ router.post('/tips/:tip/update', auth, tipController.update);
 router.delete('/tips/:tip', auth, tipController.delete);
 
 // Audios
-router.get('/audios', auth, audioController.index);
-router.get('/audios/categories', auth, audioController.categories);
-router.get('/audios/:audio', auth, audioController.show);
-router.post('/audios', auth, multer, audioController.store);
-router.post('/audios/:audio/update', multer, auth, audioController.update);
-router.delete('/audios/:audio', auth, audioController.delete);
+router.get('/audios', audioController.index);
+router.get('/audios/categories', audioController.categories);
+router.get('/audios/:audio', audioController.show);
+router.post('/audios', multer, audioController.store);
+router.post('/audios/:audio/update', multer, audioController.update);
+router.delete('/audios/:audio', audioController.delete);
 
 //OCR
 router.post('/ocr-scan', auth, ocrController.scan);

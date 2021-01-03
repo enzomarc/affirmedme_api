@@ -25,6 +25,6 @@ web.get('/modules', authMiddleware, moduleController.page);
 web.get('/modules/create', authMiddleware, moduleController.create);
 
 web.get('/tips', authMiddleware, tipController.page);
-web.get('/audios', authMiddleware, audioController.page);
+web.get('/audios', audioController.page);
 
 module.exports = web;
