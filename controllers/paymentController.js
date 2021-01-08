@@ -58,6 +58,7 @@ exports.confirm = async (req, res) => {
       await stripe.paymentIntents.confirm(payment.payment_id, { payment_method: data.method })
         .then(async (confirmation) => {
           payment.status = confirmation.status;
+          
           await payment.save((err, saved) => {
             if (err) {
               console.error(err);

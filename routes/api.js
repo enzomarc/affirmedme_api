@@ -65,6 +65,7 @@ router.get('/auth/verify/:token', authController.verify);
 router.post('/register', userController.register);
 router.post('/login', userController.login);
 router.get('/check/:token', userController.check);
+router.post('/users/:id/upgrade', userController.upgrade);
 
 // Payments
 router.post('/payments/create', paymentController.create);

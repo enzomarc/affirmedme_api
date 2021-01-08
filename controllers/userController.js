@@ -132,3 +132,47 @@ exports.check = async (req, res) => {
     return res.status(500).json({ message: "An error occured during verification.", error: e });
   }
 }
+
+/**
+ * Upgrade the specified user to premium.
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.upgrade = async (req, res) => {
+  const id = req.params.id;
+  const payment = req.body.payment;
+  const card = req.body.card;
+
+  await User.findById(id, async (err, user) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Unable to find the specified user. ", error: err });
+    }
+
+    if (user) {
+      await Payment.findById(payment, async (error, payment) => {
+        if (error) {
+          console.error(error);
+          return res.status(500).json({ message: "Unable to find the specified payment.", error: error });
+        }
+
+        if (payment) {
+          if (payment.user == id && payment.status == 'successed') {
+            user.premium = true;
+            user.card = card;
+
+            await user.save();
+            return res.json({ message: "User upgraded successfully.", user: user });
+          } else {
+            return res.status(500).json({ message: "Payment doesn't match the specified user." });
+          }
+        } else {
+          return res.status(500).json({ message: "Unable to find the specified payment.", error: error });
+        }
+      });
+    } else {
+      return res.status(500).json({ message: "Unable to find the specified user. ", error: err });
+    }
+  });
+}
