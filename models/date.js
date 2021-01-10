@@ -4,7 +4,9 @@ const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
   user: { type: mongoose.Types.ObjectId, ref: 'User' },
   label: { type: String, required: true },
-  at: { type: Date, required: false },
+  group: { type: String, required: true },
+  at: { type: Date, r
+    equired: false },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Date', schema);
