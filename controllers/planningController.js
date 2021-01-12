@@ -49,16 +49,28 @@ exports.store = async (req, res) => {
     if (user) {
       data.user = user._id;
       let planning = await Planning.findOne({ activity: data.activity });
-      if (!planning) planning = new Planning();
 
-      await planning.save(data, (err, saved) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).json({ message: "Unable to save the planning.", error: err });
-        }
+      if (!planning) {
+        planning = new Planning(data);
 
-        return res.status(201).json({ message: "Planning saved successfully.", planning: saved });
-      });
+        await planning.save((err, saved) => {
+          if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Unable to save the planning.", error: err });
+          }
+  
+          return res.status(201).json({ message: "Planning saved successfully.", planning: saved });
+        });
+      } else {
+        await planning.updateOne(data, (err, saved) => {
+          if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "Unable to save the planning.", error: err });
+          }
+  
+          return res.status(201).json({ message: "Planning saved successfully.", planning: saved });
+        });
+      }
     } else {
       return res.status(500).json({ message: "Unable to find the given user." });
     }
