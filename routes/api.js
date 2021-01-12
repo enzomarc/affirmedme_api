@@ -15,6 +15,7 @@ const goalController = require('../controllers/goalController');
 const contactController = require('../controllers/contactController');
 const ocrController = require('../controllers/ocrController');
 const mealController = require('../controllers/mealController');
+const planningController = require('../controllers/planningController');
 
 // Middleware
 const multer = require("../middlewares/multer");
@@ -131,5 +132,10 @@ router.get('/meals/:user', auth, mealController.index);
 router.post('/meals/:user', auth, mealController.store);
 router.put('/meals/:user/:meal', auth, mealController.update);
 router.delete('/meals/:user/:meal', auth, mealController.delete);
+
+// Planning
+router.get('/planning/:user', auth, planningController.index);
+router.post('/planning/:user', auth, planningController.store);
+router.delete('/planning/:user/:plan', auth, planningController.delete);
 
 module.exports = router;
