@@ -48,7 +48,8 @@ exports.store = async (req, res) => {
 
     if (user) {
       data.user = user._id;
-      let planning = await Planning.findOne({ activity: data.activity }) ?? new Planning();
+      let planning = await Planning.findOne({ activity: data.activity });
+      if (!planning) planning = new Planning();
 
       await planning.save(data, (err, saved) => {
         if (err) {
