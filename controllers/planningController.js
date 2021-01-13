@@ -100,7 +100,7 @@ exports.update = async (req, res) => {
             return res.status(500).json({ message: "Unable to update the planning.", error: err });
           }
   
-          return res.status(201).json({ message: "Planning updated successfully.", planning: saved });
+          return res.json({ message: "Planning updated successfully.", planning: saved });
         });
       }
     } else {
