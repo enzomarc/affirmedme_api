@@ -77,11 +77,11 @@ exports.store = async (req, res) => {
  * @param {*} res 
  */
 exports.update = async (req, res) => {
-  const planningId = req.params.planning;
-  const id = req.params.user;
+  const id = req.params.plan;
+  const usr = req.params.user;
   const data = req.body;
 
-  await User.findById(id, async (err, user) => {
+  await User.findById(usr, async (err, user) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ message: "Unable to find the given user.", error: err });
@@ -89,7 +89,7 @@ exports.update = async (req, res) => {
 
     if (user) {
       data.user = user._id;
-      let planning = await Planning.findById(planningId);
+      let planning = await Planning.findById(id);
 
       if (!planning) {
         return res.status(500).json({ message: "Unable to retrieve the given planning.", error: err });
