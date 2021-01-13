@@ -136,6 +136,7 @@ router.delete('/meals/:user/:meal', auth, mealController.delete);
 // Planning
 router.get('/planning/:user', auth, planningController.index);
 router.post('/planning/:user', auth, planningController.store);
+router.put('/planning/:user/:planning', auth, planningController.update);
 router.delete('/planning/:user/:plan', auth, planningController.delete);
 
 module.exports = router;

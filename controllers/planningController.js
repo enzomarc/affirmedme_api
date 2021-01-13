@@ -31,7 +31,7 @@ exports.index = async (req, res) => {
 }
 
 /**
- * Create or update the given planning.
+ * Create and store new planning.
  * 
  * @param {*} req 
  * @param {*} res 
@@ -62,13 +62,45 @@ exports.store = async (req, res) => {
           return res.status(201).json({ message: "Planning saved successfully.", planning: saved });
         });
       } else {
+        return res.status(500).json({ message: "Planning with same title/activity already exists.", error: err });
+      }
+    } else {
+      return res.status(500).json({ message: "Unable to find the given user." });
+    }
+  });
+}
+
+/**
+ * Update the given planning.
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.update = async (req, res) => {
+  const planningId = req.params.planning;
+  const id = req.params.user;
+  const data = req.body;
+
+  await User.findById(id, async (err, user) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Unable to find the given user.", error: err });
+    }
+
+    if (user) {
+      data.user = user._id;
+      let planning = await Planning.findById(planningId);
+
+      if (!planning) {
+        return res.status(500).json({ message: "Unable to retrieve the given planning.", error: err });
+      } else {
         await planning.updateOne(data, (err, saved) => {
           if (err) {
             console.error(err);
-            return res.status(500).json({ message: "Unable to save the planning.", error: err });
+            return res.status(500).json({ message: "Unable to update the planning.", error: err });
           }
   
-          return res.status(201).json({ message: "Planning saved successfully.", planning: saved });
+          return res.status(201).json({ message: "Planning updated successfully.", planning: saved });
         });
       }
     } else {
