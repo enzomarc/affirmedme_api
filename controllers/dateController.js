@@ -48,7 +48,7 @@ exports.store = async (req, res) => {
     }
 
     if (user) {
-      await Date.find({ user: user._id, label: data.label, at: data.at }, async (err, result) => {
+      await Date.find({ user: user._id, name: data.name, date: data.date, group: data.group }, async (err, result) => {
         if (err) {
           console.error(err);
           return res.status(500).json({ message: "An error occurred, unable to save date.", error: err });
