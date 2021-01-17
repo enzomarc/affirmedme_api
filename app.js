@@ -18,7 +18,7 @@ const prodDB = "mongodb+srv://admin:admin237@affirmedcluster.346yk.mongodb.net/a
 const localDB = "mongodb://127.0.0.1:27017/affirmedme";
 
 mongoose
-  .connect(prodDB, {
+  .connect(localDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -52,6 +52,9 @@ app.engine('hbs', handlebars({
     helpers: {
         inc: viewHelpers.inc,
         sectr: viewHelpers.parseSection,
+        json: function (content) {
+          return JSON.stringify(content);
+        },
         if_eq: function (a, b, opts) {
             if (a == b)
                 return opts.fn(this);

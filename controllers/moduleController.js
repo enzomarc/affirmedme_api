@@ -40,6 +40,17 @@ exports.create = async (req, res) => {
   return res.render("modules/create", { layout: "main", title: "Create module", messages: _messages });
 };
 
+exports.edit = async (req, res) => {
+  const error = req.flash("error");
+  const info = req.flash("info");
+	const success = req.flash("success");
+  const _messages = { success: success, info: info, error: error };
+  const module = await Module.findById(req.params.module);
+  console.log(module.steps[0].goals);
+
+  return res.render("modules/edit", { layout: "main", title: "Edit module", messages: _messages, module: module });
+}
+
 /**
  * Get basic modules.
  *
@@ -81,7 +92,7 @@ exports.premium = async (req, res) => {
             console.error(err);
             return res
               .status(500)
-              .json({ message: "Unable to get all the basic modules.", error: err });
+              .json({ message: "Unable to get all the premium modules.", error: err });
           }
       
           return res.json(modules);
@@ -195,31 +206,45 @@ exports.store = async (req, res) => {
     const data_steps = data.step;
     const module_title = data.title;
     const module_steps = [];
+    var module = await Module.findOne({ title: module_title });
 
     data_steps.forEach(step => {
       const goals = step.goal;
       const step_data = { title: step['step-title'], goals: [] };
 
       goals.forEach(goal => {
-        const goal_data = { title: goal['goal-title'], tips: goal.tip ? goal.tip.map(item => item['goal-title']) : [] };
+        const goal_data = { title: goal['goal-title'], tips: goal.tip ? goal.tip.map(item => item['tip-title']) : [] };
         step_data.goals.push(goal_data);
       });
 
       module_steps.push(step_data);
     });
 
-    const module_data = { title: module_title, steps: module_steps, type: data.type };
-    const module = new Module(module_data);
+    const module_data = { title: module_title, steps: module_steps, type: data.type, instruction: data.instruction };
 
-    await module.save((err, succ) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: "An error occurred during module creation.", error: err });
-      }
+    if (!module) {
+      module = new Module(module_data);
 
-      if (succ)
-        return res.status(201).json({ message: "Module successfully created.", module: succ });
-    });
+      await module.save((err, succ) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ message: "An error occurred during module creation.", error: err });
+        }
+  
+        if (succ)
+          return res.status(201).json({ message: "Module successfully created.", module: succ });
+      });
+    } else {
+      await module.updateOne(module_data, (err, succ) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ message: "An error occurred during module creation.", error: err });
+        }
+  
+        if (succ)
+          return res.status(201).json({ message: "Module successfully updated.", module: succ });
+      });
+    }
   }
 };
 

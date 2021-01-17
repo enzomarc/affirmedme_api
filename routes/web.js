@@ -9,22 +9,23 @@ const audioController = require('../controllers/audioController');
 
 
 // Middlewares
-const authMiddleware = require('../middlewares/auth_web');
+const auth = require('../middlewares/auth_web');
 
 // Authentication
 web.get('/login', authController.page);
 web.get('/logout', authController.logout);
 web.post('/login/:token', authController.login);
 
-web.get('/', authMiddleware, (req, res, next) => {
+web.get('/', auth, (req, res, next) => {
   res.render('index', { layout: 'main', title: 'Dashboard' });
 });
 
 // Modules
-web.get('/modules', authMiddleware, moduleController.page);
-web.get('/modules/create', authMiddleware, moduleController.create);
+web.get('/modules', auth, moduleController.page);
+web.get('/modules/create', auth, moduleController.create);
+web.get('/modules/edit/:module', auth, moduleController.edit);
 
-web.get('/tips', authMiddleware, tipController.page);
+web.get('/tips', auth, tipController.page);
 web.get('/audios', audioController.page);
 
 module.exports = web;

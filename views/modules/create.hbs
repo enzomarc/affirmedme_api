@@ -33,6 +33,14 @@
           </div>
           <div class="row">
             <div class="col-md-12">
+              <div class="form-group">
+                <label for="title"><b>Module instruction</b></label>
+                <textarea class="form-control" name="instruction" id="instruction" cols="30" rows="4"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
               <div class="repeater">
                 <div data-repeater-list="step" style="margin-bottom: 2rem">
                   <div class="row" data-repeater-item>
@@ -167,6 +175,7 @@
     const data = $('.repeater').repeaterVal();
     data.title = $('#title').val();
     data.type = $('#type').val();
+    data.instruction = $('#instruction').val();
 
     if (data.title == "" || data.title == null || data.step.length <= 0) {
       toastr.error("The module title and at least one step are required.", 'Missing fields');

@@ -54,6 +54,7 @@
                 {{/if}}
               </td>
               <td>
+                <a href="/modules/edit/{{module._id}}" title="Edit" class="btn btn-sm btn-primary edit"><i class="bx bx-edit"></i> Edit</a>
                 <button type="button" title="Delete" class="btn btn-sm btn-danger delete" data-module="{{module._id}}"><i class="bx bx-trash"></i> Delete</button>
               </td>
             </tr>
@@ -65,95 +66,6 @@
     </div>
   </div>
 </div>
-
-<!-- Add module modal -->
-<div class="modal fade add-module-modal" tabindex="-1" role="dialog" aria-labelledby="Add module modal"
-  style="display: none;" aria-modal="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="col-md-10">
-          <h5 class="modal-title mt-0" id="myLargeModalLabel">Add a module</h5>
-          <p class="card-title-desc" style="margin-bottom: 0">Fill out all the required fields and click on <b
-              style="color: #000;">Save</b>.</p>
-        </div>
-
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <form action="/api/modules" method="post">
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="form-group">
-                <label for="first_name">Module name *</label>
-                <input type="text" class="form-control" name="title" id="title" placeholder="Eat well to feel great">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <label>Steps</label>
-              <div class="repeater">
-                <div data-repeater-list="module">
-                  <div class="row" style="margin-bottom: 2rem" data-repeater-item>
-                    <div class="col-md-10">
-                      <input type="text" name="step-title" class="form-control" placeholder="Systemize your decision making">
-                      <label>Goals</label>
-                      <div class="goals-repeater">
-                        <div data-repeater-list="goal">
-                          <div class="row" data-repeater-item>
-                            <div class="col-md-10">
-                              <input type="text" name="goal-title" class="form-control" placeholder="Be a hyperrealist">
-                              <label>Tips</label>
-                              <div class="tips-repeater">
-                                <div data-repeater-list="tip">
-                                  <div class="row" data-repeater-item>
-                                    <div class="col-md-10">
-                                      <input type="text" name="tip-title" class="form-control">
-                                    </div>
-                                    <div class="col-md-2">
-                                      <button data-repeater-delete class="btn btn-danger btn-sm"><i class="bx bx-x"></i></button>
-                                      <button data-repeater-create class="btn btn-primary btn-sm"><i class="bx bx-plus"></i></button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-md-2">
-                            <button data-repeater-delete class="btn btn-danger btn-sm"><i class="bx bx-x"></i></button>
-                            <button data-repeater-create class="btn btn-primary btn-sm"><i class="bx bx-plus"></i></button>
-                          </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-2">
-                      <button data-repeater-delete class="btn btn-danger btn-sm"><i class="bx bx-x"></i></button>
-                      <button data-repeater-create class="btn btn-primary btn-sm"><i class="bx bx-plus"></i></button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-          <button type="submit" class="btn btn-success">Enregistrer</button>
-        </div>
-      </form>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- End add module modal -->
-
-<!-- Edit module modal -->
-
-<!-- End edit module modal -->
 
 <!-- Required datatable js -->
 <script src="/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
