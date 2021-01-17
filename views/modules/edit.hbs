@@ -1,0 +1,206 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h4 class="card-title">Edit module</h4>
+            <p class="card-title-desc">Fill all the required fields and click on <b>Save</b>.</p>
+          </div>
+        </div>
+
+        {{> messages}}
+
+        <form action="/api/modules" id="add-module-form" method="post">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="title"><b>Module name *</b></label>
+                <input type="text" class="form-control" name="title" id="title" placeholder="Eat well to feel great" value="{{module.title}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="type"><b>Module type *</b></label>
+                <select class="form-control" name="type" id="type">
+                  <option value="basic" {{#if_eq module.type 'basic'}} selected {{/if_eq}}>Basic Module</option>
+                  <option value="premium" {{#if_eq module.type 'premium'}} selected {{/if_eq}}>Premium Module</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="title"><b>Module instruction</b></label>
+                <textarea class="form-control" name="instruction" id="instruction" cols="30" rows="4">{{module.instruction}}</textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="repeater">
+                <div data-repeater-list="step" style="margin-bottom: 2rem">
+                  <div class="row" data-repeater-item>
+                    <div class="col-md-11">
+                      <label><b>New Step</b></label>
+                      <input type="text" name="step-title" class="form-control" placeholder="Step" style="margin-bottom: 1rem">
+                      <div class="goals-repeater">
+                        <div data-repeater-list="goal" style="margin-bottom: 2rem">
+                          <div class="row" data-repeater-item>
+                            <div class="col-md-11">
+                              <label><b>New Goal</b></label>
+                              <input type="text" name="goal-title" class="form-control" placeholder="Goal" style="margin-bottom: 1rem">
+                              <label><b>Tips</b></label>
+                              <div class="tips-repeater">
+                                <div data-repeater-list="tip" style="margin-bottom: 2rem">
+                                  <div class="row" data-repeater-item>
+                                    <div class="col-md-11">
+                                      <input type="text" name="tip-title" class="form-control" placeholder="Tip" style="margin-bottom: 1rem;">
+                                    </div>
+                                    <div class="col-md-1">
+                                      <a href="#" data-repeater-delete class="btn btn-danger btn-sm"><i class="bx bx-x"></i></a>
+                                      <a href="#" data-repeater-create class="btn btn-primary btn-sm"><i class="bx bx-plus"></i></a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-1" style="padding-top: 2rem">
+                            <a href="#" data-repeater-delete class="btn btn-danger btn-sm"><i class="bx bx-x"></i></a>
+                            <a href="#" data-repeater-create class="btn btn-primary btn-sm"><i class="bx bx-plus"></i></a>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-1" style="padding-top: 2rem">
+                      <a href="#" data-repeater-delete class="btn btn-danger btn-sm"><i class="bx bx-x"></i></a>
+                      <a href="#" data-repeater-create class="btn btn-primary btn-sm"><i class="bx bx-plus"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <button type="submit" class="btn btn-success"><i class="bx bx-save"></i> Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Required datatable js -->
+<script src="/assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<!-- Buttons examples -->
+<script src="/assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+<script src="/assets/libs/jszip/jszip.min.js"></script>
+<script src="/assets/libs/pdfmake/build/pdfmake.min.js"></script>
+<script src="/assets/libs/pdfmake/build/vfs_fonts.js"></script>
+<script src="/assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
+<script src="/assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+<!-- Responsive examples -->
+<script src="/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<!-- Responsive examples -->
+<script src="/assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<!-- Input mask -->
+<script src="/assets/libs/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+<script src="/assets/js/pages/form-mask.init.js"></script>
+<script src="/assets/libs/moment.js"></script>
+<script src="/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+<!-- form repeater js -->
+<script src="/assets/libs/jquery.repeater/jquery.repeater.min.js"></script>
+
+<script>
+  var module = {{{json module}}};
+
+  const disableInput = () => {
+    const input = $('#edit-module-form').find('input');
+    const select = $('#edit-module-form').find('select');
+
+    for (item of input) {
+      item.disabled = true;
+    }
+
+    for (item of select) {
+      item.disabled = true;
+    }
+  };
+
+  const enableInput = () => {
+    const input = $('#edit-module-form').find('input');
+    const select = $('#edit-module-form').find('select');
+
+    for (item of input) {
+      item.disabled = false;
+    }
+
+    for (item of select) {
+      item.disabled = false;
+    }
+  };
+
+  // Init Repeater
+  const repeater = $('.repeater').repeater({
+    initEmpty: false,
+    isFirstItemUndeletable: true,
+    repeaters: [{
+      selector: '.goals-repeater',
+      isFirstItemUndeletable: false,
+      repeaters: [{
+        selector: '.tips-repeater',
+        isFirstItemUndeletable: false,
+      }]
+    }]
+  });
+
+  // Init Repeater Values
+  repeater.setList(module.steps.map((step) => {
+    return { 'step-title': step.title, 'goal': step.goals.map((goal) => { return { 'goal-title': goal.title, 'tip': goal.tips.length > 0 ? goal.tips.map((tip) => { return { 'tip-title': tip }}) : [{'step-title': ''}] }}) };
+  }));
+
+
+  // Init DataTable
+  $('table').DataTable({ lengthChange: !1, buttons: ["copy", "excel", "pdf", "colvis"] }).buttons().container().appendTo("#datatable-buttons_wrapper .col-md-6:eq(0)");
+
+  $('#add-module-form').submit(function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const data = $('.repeater').repeaterVal();
+    data.title = $('#title').val();
+    data.type = $('#type').val();
+    data.instruction = $('#instruction').val();
+
+    if (data.title == "" || data.title == null || data.step.length <= 0) {
+      toastr.error("The module title and at least one step are required.", 'Missing fields');
+      return false;
+    }
+
+    $.ajax({
+      url: '/api/modules',
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(data),
+      success: (res) => {
+        toastr.success(res.message, 'Success');
+        setTimeout(() => window.location.replace('/modules'), 3000);
+      },
+      error: (err) => {
+        console.error(err);
+        toastr.error(res.responseJSON.message, 'Error');
+      }
+    });
+  });
+</script>
