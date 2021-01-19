@@ -48,7 +48,7 @@ exports.store = async (req, res) => {
     }
 
     if (user) {
-      await Meal.find({ user: user._id, title: data.title }, async (err, result) => {
+      await Meal.find({ user: user._id, title: data.title, group: data.group }, async (err, result) => {
         if (err) {
           console.error(err);
           return res.status(500).json({ message: "An error occurred, unable to save meal.", error: err });

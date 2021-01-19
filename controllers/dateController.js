@@ -39,8 +39,6 @@ exports.store = async (req, res) => {
   const id = req.params.user;
   const data = req.body;
 
-  console.log(data);
-  
   await User.findById(id, async (err, user) => {
     if (err) {
       console.error(err);
