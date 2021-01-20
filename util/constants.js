@@ -1,6 +1,0 @@
-exports.TOKEN_SECRET = "SECRET_TOKEN_ENCRYPTION_KEY";
-exports.SESSION_SECRET = "SECRET_SESSION_ENCRYPTION_KEY";
-exports.STRIPE_SECRET = "sk_test_51Hba0AGsa2eYOjddS2bhXzTW6vUBsTtUZKE2U7NyVLUNME9JExxto2E4evHmeJzu8dbm4xlGJhl8PulB3cJu4wGj002l0zIpZP";
-exports.ADMIN_USER = "emarc@gmail.com";
-exports.ADMIN_PASSWORD = "password";
-exports.APP_AMOUNT = 999;

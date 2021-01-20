@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Admin = require('../models/admin');
-const constants = require('../util/constants');
 
 /**
  * Administrator authentication.
@@ -28,7 +27,7 @@ exports.auth = async (req, res) => {
 
     if (bcrypt.compareSync(credentials.password, user.password)) {
         const payload = { id: user._id, email: user.email, name: user.name, avatar: user.avatar };
-        const token = jwt.sign(payload, constants.TOKEN_SECRET, { expiresIn: '3h' });
+        const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '3h' });
 
         return res.json({ access_token: token, user: payload });
     } else {
@@ -46,7 +45,7 @@ exports.auth = async (req, res) => {
 exports.verify = async (req, res) => {
   const token = req.params.token;
 
-  jwt.verify(token, constants.TOKEN_SECRET, async (err, decoded) => {
+  jwt.verify(token, process.env.TOKEN_SECRET, async (err, decoded) => {
     if (err) {
       console.error(err);
       return res.status(401).json({ message: "Corrupted token emitted." });

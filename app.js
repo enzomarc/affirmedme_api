@@ -7,14 +7,13 @@ const session = require('express-session');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 const mongoose = require("mongoose");
 const path = require("path");
-const constants = require('./util/constants');
 const viewHelpers = require('./util/view_helpers');
 
 // const routes = require("./routes/api");
 const routes = require('./routes/web');
 const apiRoutes = require('./routes/api');
 
-const prodDB = "mongodb+srv://admin:admin237@affirmedcluster.346yk.mongodb.net/affirmedme?retryWrites=true&w=majority";
+const prodDB = process.env.DB_HOST;
 const localDB = "mongodb://127.0.0.1:27017/affirmedme";
 
 mongoose
@@ -27,10 +26,10 @@ mongoose
 
 const app = express();
 
-app.use(cookieParser(constants.SESSION_SECRET));
+app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(session({
     key: 'user_sid',
-    secret: constants.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: { expires: new Date(Date.now() + (3600000 * 2)) }

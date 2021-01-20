@@ -1,6 +1,5 @@
 const Payment = require('../models/payment');
-const constants = require('../util/constants');
-const stripe = require('stripe')(constants.STRIPE_SECRET);
+const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 
 /**
@@ -13,7 +12,7 @@ exports.create = async (req, res) => {
   const data = req.body;
 
   await stripe.paymentIntents.create({
-    amount: constants.APP_AMOUNT,
+    amount: process.env.APP_AMOUNT,
     currency: data.currency || 'usd',
     payment_method_types: ['card'],
   })

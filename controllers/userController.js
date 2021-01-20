@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const constants = require('../util/constants');
 const User = require('../models/user');
 const Payment = require('../models/payment');
 
@@ -38,7 +37,7 @@ exports.register = async (req, res) => {
     
         if (user.active) {
           const payload = { id: user._id, name: user.name, email: user.email, phone: user.phone, premium: user.premium };
-          const token = jwt.sign(payload, constants.TOKEN_SECRET, { expiresIn: '7d' });
+          const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '7d' });
   
           return res.status(201).json({ message: "User account created successfully.", token: token, user: payload });
         } else {
@@ -50,7 +49,7 @@ exports.register = async (req, res) => {
       await user.save();
   
       const payload = { id: user._id, name: user.name, email: user.email, phone: user.phone, premium: user.premium };
-      const token = jwt.sign(payload, constants.TOKEN_SECRET, { expiresIn: '7d' });
+      const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '7d' });
   
       return res.status(201).json({ message: "User account created successfully.", token: token, user: payload });
     }
@@ -82,7 +81,7 @@ exports.login = async (req, res) => {
         return res.status(401).json({ message: "Invalid e-mail address or password." });
 
       const payload = { id: user._id, name: user.name, email: user.email, phone: user.phone, premium: user.premium };
-      const token = jwt.sign(payload, constants.TOKEN_SECRET, { expiresIn: '7d' });
+      const token = jwt.sign(payload, process.env.TOKEN_SECRET, { expiresIn: '7d' });
 
       return res.json({ token: token, user: payload });
     }
@@ -101,7 +100,7 @@ exports.check = async (req, res) => {
   const token = req.params.token;
 
   try {
-    jwt.verify(token, constants.TOKEN_SECRET, async (err, decoded) => {
+    jwt.verify(token, process.env.TOKEN_SECRET, async (err, decoded) => {
       if (err) {
         console.error(err);
         return res.status(401).json({ message: "Invalid token provided.", error: err });
@@ -120,7 +119,7 @@ exports.check = async (req, res) => {
           if (!user.active)
             return res.status(401).json({ message: "User account disabled." });
 
-          const token = jwt.sign(decoded, constants.TOKEN_SECRET);
+          const token = jwt.sign(decoded, process.env.TOKEN_SECRET);
           return res.json({ token: token, user: decoded });
         } else {
           return res.status(401).json({ message: "Unable to find the user account.", error: err });
