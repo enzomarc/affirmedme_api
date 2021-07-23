@@ -17,7 +17,7 @@ const prodDB = process.env.DB_HOST;
 const localDB = "mongodb://127.0.0.1:27017/affirmedme";
 
 mongoose
-  .connect(prodDB, {
+  .connect(localDB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
