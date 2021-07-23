@@ -6,9 +6,9 @@
           <div class="col-md-10">
             <h4 class="card-title">List of tips</h4>
             {{#if populated}}
-            <p class="card-title-desc">This is where you can see the list of tips showed in the app.</p>
+              <p class="card-title-desc">This is where you can see the list of tips showed in the app.</p>
             {{else}}
-            <p class="card-title-desc">There's no tips available.</p>
+              <p class="card-title-desc">There's no tips available.</p>
             {{/if}}
           </div>
           <div class="col-md-2">
@@ -20,37 +20,39 @@
         {{> messages}}
 
         {{#if populated}}
-        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
-          style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Tip content</th>
-              <th>Scheduled for</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+          <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Tip content</th>
+                <th>Tip author</th>
+                <th>Scheduled for</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
 
-          <tbody>
-            {{#each tips as |tip|}}
-            <tr>
-              <td style="font-weight: bold">{{inc @index}}</td>
-              <td style="font-weight: bold">{{tip.content}}</td>
-              <td>{{tip.date}}</td>
-              <td>
-                <div class="btn-group mt-4 mt-md-0" role="group" aria-label="Tip actions">
-                  <button type="button" title="Show" class="btn btn-primary show" data-tip="{{tip._id}}"><i
-                      class="bx bxs-show"></i></button>
-                  <button type="button" title="Edit" class="btn btn-primary edit" data-tip="{{tip._id}}"><i
-                      class="bx bx-edit-alt"></i></button>
-                  <button type="button" title="Delete" class="btn btn-danger delete" data-tip="{{tip._id}}"><i
-                      class="bx bx-trash"></i></button>
-                </div>
-              </td>
-            </tr>
-            {{/each}}
-          </tbody>
-        </table>
+            <tbody>
+              {{#each tips as |tip|}}
+                <tr>
+                  <td style="font-weight: bold">{{inc @index}}</td>
+                  <td>{{tip.content}}</td>
+                  <td>{{tip.author}}</td>
+                  <td>{{tip.date}}</td>
+                  <td>
+                    <div class="btn-group mt-4 mt-md-0" role="group" aria-label="Tip actions">
+                      <button type="button" title="Show" class="btn btn-primary show" data-tip="{{tip._id}}"><i
+                          class="bx bxs-show"></i></button>
+                      <button type="button" title="Edit" class="btn btn-primary edit" data-tip="{{tip._id}}"><i
+                          class="bx bx-edit-alt"></i></button>
+                      <button type="button" title="Delete" class="btn btn-danger delete" data-tip="{{tip._id}}"><i
+                          class="bx bx-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
         {{/if}}
       </div>
     </div>
@@ -58,8 +60,8 @@
 </div>
 
 <!-- Add tip modal -->
-<div class="modal fade add-tip-modal" tabindex="-1" role="dialog" aria-labelledby="Add tip modal"
-  style="display: none;" aria-modal="true">
+<div class="modal fade add-tip-modal" tabindex="-1" role="dialog" aria-labelledby="Add tip modal" style="display: none;"
+  aria-modal="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -85,8 +87,16 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-                <label for="date">Schedule for *</label>
-                <input type="date" name="date" id="date" class="form-control" required>
+              <div class="form-group">
+                <label for="content">Tip author *</label>
+                <input type="text" name="author" id="author" class="form-control" required />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label for="date">Schedule for *</label>
+              <input type="date" name="date" id="date" class="form-control" required>
             </div>
           </div>
         </div>
@@ -130,8 +140,16 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-                <label for="date">Schedule for *</label>
-                <input type="date" name="date" id="date" class="form-control" required>
+              <div class="form-group">
+                <label for="content">Tip author *</label>
+                <input type="text" name="author" id="author" class="form-control" required />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label for="date">Schedule for *</label>
+              <input type="date" name="date" id="date" class="form-control" required>
             </div>
           </div>
         </div>
@@ -223,6 +241,7 @@
       url: '/api/tips/' + tip_id,
       success: (tip) => {
         $('#edit-tip-form #content').val(tip.content);
+        $('#edit-tip-form #author').val(tip.author);
         $('#edit-tip-form #date').val(moment(tip.date).format('YYYY-MM-DD'));
 
         $('#edit-tip-form')[0].action = '/api/tips/' + tip_id + '/update';
@@ -244,6 +263,7 @@
       url: '/api/tips/' + tip_id,
       success: (tip) => {
         $('#edit-tip-form #content').val(tip.content);
+        $('#edit-tip-form #author').val(tip.author);
         $('#edit-tip-form #date').val(moment(tip.date).format('YYYY-MM-DD'));
 
         $('#edit-tip-form')[0].action = '/api/tips/' + tip_id + '/update';

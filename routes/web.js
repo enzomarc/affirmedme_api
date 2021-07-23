@@ -16,9 +16,7 @@ web.get('/login', authController.page);
 web.get('/logout', authController.logout);
 web.post('/login/:token', authController.login);
 
-web.get('/', auth, (req, res, next) => {
-  res.render('index', { layout: 'main', title: 'Dashboard' });
-});
+web.get('/', auth, authController.index);
 
 // Modules
 web.get('/modules', auth, moduleController.page);

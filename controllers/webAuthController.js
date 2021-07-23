@@ -1,5 +1,6 @@
 const request = require('request');
 const app = require('../app');
+const User = require('../models/user');
 
 /**
  * Web client login route
@@ -34,6 +35,15 @@ exports.login = (req, res) => {
       return res.status(401).json({ message: "Invalid token provided.", error: error });
     }
   });
+}
+
+exports.index = async (req, res) => {
+  const premium = await User.find({ premium: true });
+  const basic = await User.find({ premium: false });
+  const plen = premium.length;
+  const blen = basic.length;
+
+  res.render('index', { layout: 'main', title: 'Dashboard', premium: plen, basic: blen });
 }
 
 exports.page = (req, res) => {
