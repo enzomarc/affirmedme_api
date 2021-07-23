@@ -82,8 +82,8 @@ router.post('/modules/:user/check', auth, moduleController.check);
 router.delete('/modules/:module', auth, moduleController.delete);
 
 // Tips
-router.get('tips', auth, tipController.index);
-router.get('daily_tip', auth, tipController.daily);
+router.get('/tips', auth, tipController.index);
+router.get('/daily_tip', tipController.daily);
 router.get('/tips/:tip', auth, tipController.show);
 router.post('/tips', auth, tipController.store);
 router.post('/tips/:tip/update', auth, tipController.update);

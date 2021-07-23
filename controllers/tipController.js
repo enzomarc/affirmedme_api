@@ -32,9 +32,12 @@ exports.daily = async (req, res) => {
     }
 
     const today = [];
+    const todayDate = new Date();
 
     tips.forEach((tip) => {
-      if (Date.parse(tip.date) >= Date.now())
+      const tipDate = new Date(tip.date);
+
+      if (tipDate.getDay() === todayDate.getDay() && tipDate.getMonth() === todayDate.getMonth() && tipDate.getFullYear() === todayDate.getFullYear())
         today.push(tip);
     });
 
